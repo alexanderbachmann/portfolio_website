@@ -1,11 +1,16 @@
-import {BrowserRouter, Routes} from "react-router-dom";
-import {About} from "./pages/About.jsx";
+import React from 'react';
+import NavBar from './components/navbar';
+import About from './components/about';
+import Experience from './components/experience';
 
 function App() {
-
   return (
-    <About />
-  )
+    <>
+      <NavBar />
+      <About />
+      <Experience />
+    </>
+  );
 }
 
 export default App;

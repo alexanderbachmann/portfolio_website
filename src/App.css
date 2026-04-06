@@ -10,10 +10,3 @@
 .app-container.menu-pushed {
   transform: translateX(-250px);
 }
-
-.main-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: var(--space-xl) var(--space-md);
-  padding-top: calc(var(--nav-height) + var(--space-xl));
-}

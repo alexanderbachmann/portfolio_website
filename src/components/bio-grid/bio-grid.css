@@ -1,0 +1,52 @@
+.bio-grid-section {
+  padding: var(--space-3xl) var(--space-xl);
+}
+
+.bio-grid-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.bio-grid-intro {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2xl);
+  font-style: italic;
+}
+
+/* 3-column named grid */
+.bio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "map"
+    "sql"
+    "profile"
+    "metrics"
+    "cat"
+    "book"
+    "cv";
+  gap: var(--grid-gap);
+}
+
+@media (min-width: 640px) {
+  .bio-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "map      map"
+      "sql      profile"
+      "metrics  cat"
+      "book     cv";
+  }
+}
+
+@media (min-width: 1024px) {
+  .bio-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      "map      map      sql"
+      "profile  metrics  cat"
+      "book     cv       cv";
+  }
+}

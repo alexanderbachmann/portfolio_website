@@ -1,13 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './nav.css';
 
 const NAV_LINKS = [
   { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
   { label: 'Experience', href: '#experience' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
   const [activeSection, setActiveSection] = useState('about');
+  const activeSectionRef = useRef('about');
+
+  const updateActive = useCallback((id) => {
+    if (activeSectionRef.current !== id) {
+      activeSectionRef.current = id;
+      setActiveSection(id);
+    }
+  }, []);
 
   useEffect(() => {
     const sections = NAV_LINKS.map((l) =>
@@ -18,7 +28,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+            updateActive(entry.target.id);
           }
         });
       },
@@ -27,7 +37,7 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [updateActive]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);

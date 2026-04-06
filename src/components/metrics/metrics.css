@@ -1,0 +1,47 @@
+.metrics-section {
+  padding: var(--space-4xl) var(--space-xl);
+  background: var(--color-bg-base);
+}
+
+.metrics-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .metrics-wrapper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.metric-item {
+  padding: var(--space-xl);
+}
+
+.metric-value {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+
+.metric-label {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+.metric-description {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}

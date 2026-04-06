@@ -1,6 +1,6 @@
 export const metrics = [
   { label: 'Years in Data & Analytics', value: 6, icon: 'TrendingUp' },
-  { label: 'Countries Worked In', value: 4, icon: 'Globe' },
+  { label: 'Countries Lived In', value: 5, icon: 'Globe' },
   { label: 'World-Class Companies', value: 6, icon: 'Building2' },
   { label: 'Tools & Platforms Mastered', value: 10, suffix: '+', icon: 'Wrench' },
 ];
@@ -19,6 +19,8 @@ WHERE creativity = 'HIGH'
 
 export const countries = [
   { name: 'Dominican Republic', city: 'Santo Domingo', years: 'Born & raised', flag: 'DO', coordinates: [-69.9, 18.5] },
+  { name: 'Germany', city: 'Munich', years: "Bachelor's degree", flag: 'DE', coordinates: [11.6, 48.1] },
+  { name: 'Canada', city: 'Toronto', years: 'Postgrad studies', flag: 'CA', coordinates: [-79.4, 43.7] },
   { name: 'Germany', city: 'Frankfurt', years: '2019 - 2021', flag: 'DE', coordinates: [8.7, 50.1] },
   { name: 'Ireland', city: 'Dublin', years: '2021 - 2022', flag: 'IE', coordinates: [-6.3, 53.3] },
   { name: 'Spain', city: 'Barcelona', years: '2022 - Present', flag: 'ES', coordinates: [2.2, 41.4] },

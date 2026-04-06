@@ -20,7 +20,7 @@ const CountriesMap = () => {
           Journey
         </span>
         <span style={{ fontSize: 'var(--text-sm)', color: 'var(--color-accent)' }}>
-          4 countries &middot; 3 continents
+          5 countries &middot; 6 cities
         </span>
       </div>
 
@@ -28,8 +28,8 @@ const CountriesMap = () => {
         <ComposableMap
           projection="geoEqualEarth"
           projectionConfig={{
-            center: [-20, 35],
-            scale: 220,
+            center: [-30, 38],
+            scale: 180,
           }}
           style={{ width: '100%', height: '100%' }}
         >

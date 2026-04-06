@@ -5,7 +5,7 @@ import './metrics.css';
 
 const stats = [
   { value: 6, label: 'Years in Data', description: 'Building analytics solutions since 2019' },
-  { value: 4, label: 'Countries', description: 'Dominican Republic, Germany, Ireland, Spain' },
+  { value: 5, label: 'Countries', description: 'Dominican Republic, Germany, Canada, Ireland, Spain' },
   { value: 6, label: 'Global Companies', description: 'Including Google, ECB, Roche' },
 ];
 

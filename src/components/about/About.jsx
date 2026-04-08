@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.css';
-import profilePic from '../../assets/fotos_with_dogs.jpg';
+import profilePic from '../../assets/speaker.jpeg';
 import CV from '../../assets/CV.pdf';
 
 const About = () => {

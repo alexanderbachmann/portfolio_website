@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import profilePic from '../../../assets/fotos_with_dogs.jpg';
+import profilePic from '../../../assets/speaker.jpeg';
 
 const ProfileCard = () => {
   const cardRef = useRef(null);

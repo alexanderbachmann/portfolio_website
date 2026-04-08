@@ -46,10 +46,9 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          I own data products end-to-end&mdash;from translating business goals
-          into roadmaps to driving cross-functional delivery and user adoption.
-          Currently leading omnichannel analytics at Boehringer Ingelheim, with
-          a track record at Google, Roche, and the European Central Bank.
+          Data without ownership is just noise. I take products from vision
+          to scalable adoption&mdash;aligning teams, shaping strategy, and
+          building solutions designed to grow with the business.
         </motion.p>
 
         <motion.div

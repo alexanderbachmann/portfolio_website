@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useInView } from 'motion/react';
-import { TrendingUp, Globe, Building2, Wrench } from 'lucide-react';
+import { TrendingUp, Globe, Building2, Layers } from 'lucide-react';
 import { metrics } from '../../../data/bio-metrics';
 
-const iconMap = { TrendingUp, Globe, Building2, Wrench };
+const iconMap = { TrendingUp, Globe, Building2, Layers };
 
 const Counter = ({ target, suffix = '' }) => {
   const [count, setCount] = useState(0);

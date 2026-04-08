@@ -25,7 +25,7 @@ const Contact = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
         >
           Have a question, want to collaborate, or just want to connect?
-          I'm always happy to hear from fellow data enthusiasts.
+          I'm always happy to hear from product, data, and analytics leaders.
         </motion.p>
 
         <motion.div

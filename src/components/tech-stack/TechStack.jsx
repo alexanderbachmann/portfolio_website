@@ -1,12 +1,30 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import {
-  BarChart3, Database, Code2, Cloud, GitBranch, Layout,
+  BarChart3, Database, Code2, Cloud, Target, Lightbulb,
 } from 'lucide-react';
 import SectionHeading from '../shared/SectionHeading';
 import './tech-stack.css';
 
 const categories = [
+  {
+    title: 'Product Leadership',
+    icon: Target,
+    tools: [
+      { name: 'Stakeholder Management', detail: 'Alignment & buy-in' },
+      { name: 'Prioritization', detail: 'Frameworks & trade-offs' },
+      { name: 'Roadmap Delivery', detail: 'Vision to execution' },
+    ],
+  },
+  {
+    title: 'Discovery & Impact',
+    icon: Lightbulb,
+    tools: [
+      { name: 'Requirements Elicitation', detail: 'Business needs → specs' },
+      { name: 'KPI Design', detail: 'Outcome tracking' },
+      { name: 'A/B Testing', detail: 'Data-driven decisions' },
+    ],
+  },
   {
     title: 'Visualization',
     icon: BarChart3,
@@ -49,8 +67,8 @@ const TechStack = () => {
   return (
     <section className="tech-stack-section">
       <div className="tech-stack-wrapper">
-        <SectionHeading subtitle="Technologies and platforms I work with daily">
-          Skills & Tools
+        <SectionHeading subtitle="Product leadership capabilities and the tools that enable them">
+          Competencies & Toolkit
         </SectionHeading>
 
         <div className="tech-stack-grid">

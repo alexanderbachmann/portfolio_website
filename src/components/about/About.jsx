@@ -13,14 +13,14 @@ const About = () => {
             <h1 className="about-title">
               Hola! I'm <em className="highlight">Janio.</em>
             </h1>
-            <h2 className="about-subtitle"> Full-Stack BI Developer </h2>
+            <h2 className="about-subtitle"> Global Product Owner &middot; Data & BI </h2>
 
             <p className="about-description">
-              Hi, I'm Janio — a data-driven full-stack developer who's half Dominican 🇩🇴, half German 🇩🇪, and fully
-              obsessed with turning complexity into clarity.
+              Hi, I'm Janio — a product-minded data leader who's half Dominican 🇩🇴, half German 🇩🇪, and fully
+              obsessed with turning business complexity into clear, actionable products.
               <br/><br/>
-              I love building things that are simple, useful, and feel good to use — whether it's clean code,
-              thoughtful design, or sharing what I've learned with others.
+              I love bridging the gap between stakeholders and delivery teams — whether it's shaping a roadmap,
+              designing KPIs, or driving adoption of the solutions we build together.
               <br/><br/>
               When I'm not building or teaching, I'm probably out for a run, lost in a book, or hanging out with my
               Himalayan cat.

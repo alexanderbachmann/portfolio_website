@@ -46,9 +46,10 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          I build data products that turn complexity into decisions. Currently
-          shaping omnichannel analytics at Boehringer Ingelheim, previously at
-          Google, Roche, and the European Central Bank.
+          I own data products end-to-end&mdash;from translating business goals
+          into roadmaps to driving cross-functional delivery and user adoption.
+          Currently leading omnichannel analytics at Boehringer Ingelheim, with
+          a track record at Google, Roche, and the European Central Bank.
         </motion.p>
 
         <motion.div

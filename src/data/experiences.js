@@ -25,8 +25,8 @@ export const experiences = [
     location: "Barcelona, Spain",
     logo: rocheLogo,
     description: [
-      "Automated reporting using Salesforce and advanced analytics, reducing manual effort from one week to half a day.",
-      "Led the design and deployment of Tableau dashboards and Global KPIs, enabling data-driven decisions across the global service division.",
+      "Led the design and rollout of global KPIs and Tableau dashboards, enabling data-driven decisions across the global service division.",
+      "Drove reporting automation using Salesforce and advanced analytics, reducing manual effort from one week to half a day.",
       "Built a structured onboarding program and supported Snowflake migration, improving analyst ramp-up time and ensuring seamless data integration."
     ]
   },
@@ -37,9 +37,9 @@ export const experiences = [
     location: "Barcelona, Spain",
     logo: voodooLogo,
     description: [
-      "Built interactive Tableau dashboards and scalable dbt models to track key metrics like churn, ad revenue, and in-app purchases.",
-      "Designed A/B testing frameworks with product teams to optimize game features and monetization strategies",
-      "Presented data insights to senior executives, driving informed decisions on feature rollouts and user engagement strategies."
+      "Partnered with product teams to design A/B testing frameworks, optimizing game features and monetization strategies.",
+      "Presented data insights to senior executives, driving informed decisions on feature rollouts and user engagement.",
+      "Built interactive Tableau dashboards and scalable dbt models to track key metrics like churn, ad revenue, and in-app purchases."
     ]
   },
   {
@@ -49,9 +49,9 @@ export const experiences = [
     location: "Dublin, Ireland",
     logo: googleLogo,
     description: [
-      "Developed scalable data solutions for game monetization clients by analyzing impressions, ROAS, and ad revenue to optimize performance.",
-      "Built comprehensive dashboards in Looker to monitor new account acquisitions, providing real-time insights for business growth",
-      "Wrote complex SQL queries integrating multiple data sources, enabling detailed analysis and actionable insights for business partners."
+      "Partnered with game monetization clients to optimize ad performance, analyzing impressions, ROAS, and revenue to drive growth.",
+      "Built comprehensive Looker dashboards monitoring new account acquisitions, providing real-time insights for business growth.",
+      "Integrated multiple data sources through complex SQL queries, enabling actionable insights for cross-functional business partners."
     ]
   },
   {
@@ -61,9 +61,9 @@ export const experiences = [
     location: "Frankfurt, Germany",
     logo: ecbLogo,
     description: [
-      "Reconciled ECB's balance sheet by consolidating data from national central banks, ensuring accuracy and compliance with EU standards.",
       "Drove RPA adoption by presenting use cases and showcasing efficiency gains, reducing manual workload across key processes.",
-      "Conducted in-depth data quality analysis using R to monitor and enforce reporting compliance across Eurozone institutions"
+      "Reconciled ECB's balance sheet by consolidating data from national central banks, ensuring accuracy and compliance with EU standards.",
+      "Conducted in-depth data quality analysis using R to monitor and enforce reporting compliance across Eurozone institutions."
     ]
   },
   {
@@ -73,9 +73,9 @@ export const experiences = [
     location: "Frankfurt, Germany",
     logo: emmagLogo,
     description: [
-      "Analyzed marketing data to improve campaign effectiveness and boost customer engagement.",
-      "Built and maintained PowerBI dashboards to track country-level campaign performance and enable real-time decision-making.",
-      "Automated reporting processes using Python, significantly reducing manual effort and increasing efficiency."
+      "Built and maintained PowerBI dashboards to track country-level campaign performance, enabling real-time decision-making for stakeholders.",
+      "Analyzed marketing data to improve campaign effectiveness and boost customer engagement across markets.",
+      "Automated reporting processes using Python, significantly reducing manual effort and increasing team efficiency."
     ]
   }
 ];

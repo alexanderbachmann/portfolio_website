@@ -1,8 +1,8 @@
 export const metrics = [
-  { label: 'Years in Data & Analytics', value: 6, icon: 'TrendingUp' },
+  { label: 'Years in Data & Product', value: 6, icon: 'TrendingUp' },
   { label: 'Countries Lived In', value: 5, icon: 'Globe' },
   { label: 'World-Class Companies', value: 6, icon: 'Building2' },
-  { label: 'Tools & Platforms Mastered', value: 10, suffix: '+', icon: 'Wrench' },
+  { label: 'Data Products Shaped', value: 10, suffix: '+', icon: 'Layers' },
 ];
 
 export const sqlQuery = {
@@ -46,7 +46,7 @@ export const currentBook = {
 };
 
 export const achievementMetrics = [
-  { value: 6, label: 'Years in Data', description: 'Building analytics solutions since 2019' },
+  { value: 6, label: 'Years in Data & Product', description: 'Driving product outcomes since 2019' },
   { value: 4, label: 'Countries', description: 'Dominican Republic, Germany, Ireland, Spain' },
   { value: 5, suffix: 'days', prefix: '', label: 'to 0.5 Days', description: 'Reporting automation at Roche' },
   { value: 6, label: 'Global Companies', description: 'Including Google, ECB, Roche, Boehringer Ingelheim' },

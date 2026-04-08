@@ -6,7 +6,6 @@
   text-align: center;
   padding: var(--space-4xl) var(--space-xl);
   position: relative;
-  overflow: hidden;
 }
 
 /* subtle radial glow behind hero text */
@@ -89,4 +88,44 @@
   border-color: var(--color-accent);
   box-shadow: var(--shadow-glow);
   transform: translateY(-3px);
+}
+
+/* ========================================
+   CARTOON CHARACTER
+   ======================================== */
+.cartoon-janio-wrapper {
+  position: absolute;
+  bottom: 0;
+  right: 12%;
+  transform: translateY(40%);
+  z-index: 2;
+  width: clamp(90px, 12vw, 160px);
+  pointer-events: none;
+}
+
+.cartoon-janio-wrapper svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .cartoon-janio-wrapper {
+    right: 6%;
+    width: clamp(80px, 14vw, 130px);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .cartoon-janio-wrapper {
+    right: 4%;
+    width: 70px;
+    transform: translateY(35%);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .cartoon-janio-wrapper {
+    display: none;
+  }
 }

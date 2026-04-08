@@ -1,6 +1,7 @@
 import React from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { Linkedin, Github, BookOpen } from 'lucide-react';
+import CartoonJanio from './CartoonJanio';
 import './hero.css';
 
 const socials = [
@@ -19,6 +20,8 @@ const socials = [
 ];
 
 const Hero = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="hero">
       <div className="hero-inner">
@@ -71,6 +74,24 @@ const Hero = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* Cartoon character sitting on the wave */}
+      <motion.div
+        className="cartoon-janio-wrapper"
+        initial={{ opacity: 0, y: 20 }}
+        animate={
+          shouldReduceMotion
+            ? { opacity: 1, y: 0 }
+            : { opacity: 1, y: [0, -8, 0], rotate: [0, 1.5, 0, -1.5, 0] }
+        }
+        transition={{
+          opacity: { duration: 0.6, delay: 0.6 },
+          y: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 },
+          rotate: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.6 },
+        }}
+      >
+        <CartoonJanio />
+      </motion.div>
     </section>
   );
 };

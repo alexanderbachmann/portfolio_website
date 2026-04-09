@@ -9,12 +9,14 @@ import Accomplishments from './components/accomplishments';
 import Contact from './components/contact';
 import Footer from './components/footer';
 import SvgDivider from './components/shared/SvgDivider';
+import AnimatedBackground from './components/shared/AnimatedBgOption1';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className={`app-container ${isMenuOpen ? 'menu-pushed' : ''}`}>
+      <AnimatedBackground />
       <NavBar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
       <main>

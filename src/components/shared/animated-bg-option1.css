@@ -1,0 +1,161 @@
+/* ========================================
+   OPTION 1: Floating Particles
+   Tiny dots that drift upward slowly,
+   like embers or fireflies. Subtle & techy.
+   ======================================== */
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.animated-bg__particle {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+
+/* --- Individual particles --- */
+.animated-bg__particle--1 {
+  width: 3px;
+  height: 3px;
+  bottom: -5%;
+  left: 12%;
+  background: #818cf8;
+  opacity: 0.4;
+  animation: float-up-1 18s linear infinite;
+}
+
+.animated-bg__particle--2 {
+  width: 2px;
+  height: 2px;
+  bottom: -5%;
+  left: 28%;
+  background: hsl(20, 88%, 48%);
+  opacity: 0.35;
+  animation: float-up-2 22s linear infinite 3s;
+}
+
+.animated-bg__particle--3 {
+  width: 4px;
+  height: 4px;
+  bottom: -5%;
+  left: 55%;
+  background: #818cf8;
+  opacity: 0.25;
+  animation: float-up-3 25s linear infinite 1s;
+}
+
+.animated-bg__particle--4 {
+  width: 2px;
+  height: 2px;
+  bottom: -5%;
+  left: 72%;
+  background: hsl(20, 88%, 48%);
+  opacity: 0.3;
+  animation: float-up-1 20s linear infinite 7s;
+}
+
+.animated-bg__particle--5 {
+  width: 3px;
+  height: 3px;
+  bottom: -5%;
+  left: 88%;
+  background: #818cf8;
+  opacity: 0.3;
+  animation: float-up-2 24s linear infinite 5s;
+}
+
+.animated-bg__particle--6 {
+  width: 2px;
+  height: 2px;
+  bottom: -5%;
+  left: 40%;
+  background: #818cf8;
+  opacity: 0.2;
+  animation: float-up-3 28s linear infinite 10s;
+}
+
+.animated-bg__particle--7 {
+  width: 3px;
+  height: 3px;
+  bottom: -5%;
+  left: 65%;
+  background: hsl(20, 88%, 48%);
+  opacity: 0.25;
+  animation: float-up-1 21s linear infinite 12s;
+}
+
+.animated-bg__particle--8 {
+  width: 2px;
+  height: 2px;
+  bottom: -5%;
+  left: 5%;
+  background: #818cf8;
+  opacity: 0.35;
+  animation: float-up-2 19s linear infinite 8s;
+}
+
+/* --- Float keyframes (drift upward with gentle horizontal sway) --- */
+@keyframes float-up-1 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.15;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(40px);
+    opacity: 0;
+  }
+}
+
+@keyframes float-up-2 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.35;
+  }
+  90% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(-30px);
+    opacity: 0;
+  }
+}
+
+@keyframes float-up-3 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.25;
+  }
+  90% {
+    opacity: 0.08;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(60px);
+    opacity: 0;
+  }
+}
+
+/* --- Mobile: fewer particles --- */
+@media screen and (max-width: 640px) {
+  .animated-bg__particle--5,
+  .animated-bg__particle--6,
+  .animated-bg__particle--7,
+  .animated-bg__particle--8 {
+    display: none;
+  }
+}

@@ -18,101 +18,142 @@ const CartoonJanio = ({ className }) => (
     {/* === Legs (seated, dangling) === */}
     <path
       d="M72,205 Q70,230 66,258 Q64,270 68,275"
-      stroke="hsl(222,35%,22%)"
+      stroke="hsl(218, 42%, 26%)"
       strokeWidth="20"
       strokeLinecap="round"
       fill="none"
     />
     <path
       d="M128,205 Q130,230 134,258 Q136,270 132,275"
-      stroke="hsl(222,35%,22%)"
+      stroke="hsl(218, 42%, 26%)"
       strokeWidth="20"
       strokeLinecap="round"
       fill="none"
     />
 
-    {/* Shoes */}
-    <ellipse cx="68" cy="280" rx="14" ry="7" fill="hsl(222,28%,15%)" />
-    <ellipse cx="132" cy="280" rx="14" ry="7" fill="hsl(222,28%,15%)" />
+    {/* Shoes (brown) */}
+    <ellipse cx="68" cy="280" rx="14" ry="7" fill="hsl(25, 40%, 30%)" />
+    <ellipse cx="132" cy="280" rx="14" ry="7" fill="hsl(25, 40%, 30%)" />
 
-    {/* === Torso (navy sweater) === */}
+    {/* === Torso (blue suit jacket) === */}
     <rect
       x="58"
       y="128"
       width="84"
       height="82"
       rx="22"
-      fill="hsl(222,42%,20%)"
+      fill="hsl(218, 45%, 28%)"
     />
-
-    {/* White collar peek */}
+    {/* Suit lapels */}
     <path
-      d="M90,130 L100,144 L110,130"
-      fill="hsl(0,0%,92%)"
-      stroke="hsl(0,0%,85%)"
+      d="M82,128 L92,152 L100,138"
+      fill="hsl(218, 50%, 24%)"
+      stroke="hsl(218, 40%, 20%)"
+      strokeWidth="0.8"
+    />
+    <path
+      d="M118,128 L108,152 L100,138"
+      fill="hsl(218, 50%, 24%)"
+      stroke="hsl(218, 40%, 20%)"
+      strokeWidth="0.8"
+    />
+    {/* White shirt visible between lapels */}
+    <path
+      d="M92,132 L100,152 L108,132"
+      fill="hsl(0, 0%, 94%)"
+    />
+    {/* Shirt collar points */}
+    <path
+      d="M88,130 L94,138 L100,130"
+      fill="hsl(0, 0%, 96%)"
+      stroke="hsl(0, 0%, 88%)"
       strokeWidth="0.5"
     />
+    <path
+      d="M100,130 L106,138 L112,130"
+      fill="hsl(0, 0%, 96%)"
+      stroke="hsl(0, 0%, 88%)"
+      strokeWidth="0.5"
+    />
+    {/* Suit button */}
+    <circle cx="100" cy="168" r="2.5" fill="hsl(218, 40%, 20%)" />
 
     {/* === Left arm (resting on surface) === */}
     <path
       d="M58,148 Q36,168 40,198"
-      stroke="hsl(222,42%,20%)"
+      stroke="hsl(218, 45%, 28%)"
       strokeWidth="18"
       strokeLinecap="round"
       fill="none"
     />
     {/* Left hand */}
-    <circle cx="40" cy="200" r="9" fill="hsl(25,45%,70%)" />
+    <circle cx="40" cy="200" r="9" fill="hsl(25, 40%, 78%)" />
 
     {/* === Right arm (waving!) === */}
     <path
       d="M142,148 Q164,132 162,105"
-      stroke="hsl(222,42%,20%)"
+      stroke="hsl(218, 45%, 28%)"
       strokeWidth="18"
       strokeLinecap="round"
       fill="none"
     />
     {/* Right hand (open wave) */}
-    <circle cx="162" cy="102" r="9" fill="hsl(25,45%,70%)" />
+    <circle cx="162" cy="102" r="9" fill="hsl(25, 40%, 78%)" />
     {/* Little wave fingers */}
     <path
       d="M155,94 Q154,86 156,82"
-      stroke="hsl(25,45%,70%)"
+      stroke="hsl(25, 40%, 78%)"
       strokeWidth="4"
       strokeLinecap="round"
       fill="none"
     />
     <path
       d="M161,92 Q161,84 162,79"
-      stroke="hsl(25,45%,70%)"
+      stroke="hsl(25, 40%, 78%)"
       strokeWidth="4"
       strokeLinecap="round"
       fill="none"
     />
     <path
       d="M167,94 Q168,86 167,82"
-      stroke="hsl(25,45%,70%)"
+      stroke="hsl(25, 40%, 78%)"
       strokeWidth="4"
       strokeLinecap="round"
       fill="none"
     />
 
     {/* === Head === */}
-    <ellipse cx="100" cy="90" rx="40" ry="44" fill="hsl(25,45%,70%)" />
+    <ellipse cx="100" cy="90" rx="36" ry="46" fill="hsl(25, 40%, 78%)" />
 
-    {/* === Hair (short, cropped sides, fuller on top) === */}
+    {/* === Hair (side-parted, swept right, covers forehead) === */}
+    {/* Left section of part — thinner volume */}
     <path
-      d="M60,82 Q60,38 100,34 Q140,38 140,82 Q132,66 100,62 Q68,66 60,82Z"
+      d="M62,82 Q62,42 85,36 L88,34 Q64,38 62,82Z"
       fill="hsl(20,30%,18%)"
     />
-    {/* Hair side trim (cropped look) */}
+    {/* Right section of part — fuller swept mass, lower to cover forehead */}
     <path
-      d="M62,82 Q60,70 64,60"
+      d="M88,34 Q100,28 132,34 Q144,42 140,82 Q134,68 112,64 Q94,62 88,34Z"
+      fill="hsl(20,30%,18%)"
+    />
+    {/* Fringe sweeping across forehead */}
+    <path
+      d="M86,38 Q95,50 108,52 Q118,52 128,46"
+      fill="hsl(20,30%,18%)"
+      stroke="hsl(20,30%,18%)"
+      strokeWidth="6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    {/* Side crop — left (shorter, tighter to head) */}
+    <path
+      d="M62,82 Q60,72 64,62 Q66,56 70,52"
       stroke="hsl(20,25%,14%)"
-      strokeWidth="4"
+      strokeWidth="5"
       strokeLinecap="round"
       fill="none"
     />
+    {/* Side crop — right */}
     <path
       d="M138,82 Q140,70 136,60"
       stroke="hsl(20,25%,14%)"
@@ -120,36 +161,49 @@ const CartoonJanio = ({ className }) => (
       strokeLinecap="round"
       fill="none"
     />
-    {/* Hair highlight */}
+    {/* Hair swept volume highlight on top-right */}
     <path
-      d="M78,46 Q100,40 122,46"
+      d="M92,38 Q112,30 134,40"
       stroke="hsl(20,28%,26%)"
       strokeWidth="3"
       strokeLinecap="round"
       fill="none"
     />
+    {/* Part line */}
+    <line
+      x1="87" y1="36" x2="84" y2="52"
+      stroke="hsl(25, 40%, 78%)"
+      strokeWidth="1.5"
+      opacity="0.35"
+    />
 
     {/* === Face === */}
 
-    {/* Eyes */}
-    <ellipse cx="84" cy="88" rx="5" ry="5.5" fill="hsl(222,47%,8%)" />
-    <ellipse cx="116" cy="88" rx="5" ry="5.5" fill="hsl(222,47%,8%)" />
+    {/* Eyes — blue iris */}
+    <ellipse cx="84" cy="88" rx="5" ry="5.5" fill="hsl(210, 70%, 55%)" />
+    <ellipse cx="116" cy="88" rx="5" ry="5.5" fill="hsl(210, 70%, 55%)" />
+    {/* Iris ring for definition */}
+    <ellipse cx="84" cy="88" rx="5.5" ry="6" fill="none" stroke="hsl(210, 60%, 35%)" strokeWidth="1" />
+    <ellipse cx="116" cy="88" rx="5.5" ry="6" fill="none" stroke="hsl(210, 60%, 35%)" strokeWidth="1" />
+    {/* Pupils */}
+    <circle cx="84" cy="88" r="2.2" fill="hsl(222, 47%, 8%)" />
+    <circle cx="116" cy="88" r="2.2" fill="hsl(222, 47%, 8%)" />
     {/* Eye highlights */}
     <circle cx="86" cy="86" r="2" fill="white" opacity="0.9" />
     <circle cx="118" cy="86" r="2" fill="white" opacity="0.9" />
 
-    {/* Eyebrows */}
+    {/* Eyebrows — slightly angular */}
     <path
-      d="M76,78 Q84,74 92,78"
+      d="M76,80 Q84,73 92,77"
       stroke="hsl(20,30%,18%)"
-      strokeWidth="2.5"
+      strokeWidth="2.8"
       strokeLinecap="round"
       fill="none"
     />
     <path
-      d="M108,78 Q116,74 124,78"
+      d="M108,77 Q116,73 124,80"
       stroke="hsl(20,30%,18%)"
-      strokeWidth="2.5"
+      strokeWidth="2.8"
       strokeLinecap="round"
       fill="none"
     />
@@ -164,8 +218,8 @@ const CartoonJanio = ({ className }) => (
     />
 
     {/* Rosy cheeks */}
-    <circle cx="74" cy="100" r="7" fill="hsla(0,55%,62%,0.2)" />
-    <circle cx="126" cy="100" r="7" fill="hsla(0,55%,62%,0.2)" />
+    <circle cx="76" cy="100" r="7" fill="hsla(0,55%,62%,0.2)" />
+    <circle cx="124" cy="100" r="7" fill="hsla(0,55%,62%,0.2)" />
 
     {/* === Laptop on lap === */}
     <g>

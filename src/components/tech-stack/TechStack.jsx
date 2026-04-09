@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import {
-  BarChart3, Database, Code2, Cloud, Target, Lightbulb,
+  BarChart3, Database, Code2, Cloud, Target, Lightbulb, Users,
 } from 'lucide-react';
 import SectionHeading from '../shared/SectionHeading';
 import './tech-stack.css';
@@ -49,7 +49,14 @@ const categories = [
     tools: [
       { name: 'Snowflake', detail: 'Cloud DW' },
       { name: 'dbt', detail: 'Transform layer' },
-      { name: 'Salesforce', detail: 'CRM analytics' },
+    ],
+  },
+  {
+    title: 'CRM Systems',
+    icon: Users,
+    tools: [
+      { name: 'Salesforce', detail: 'CRM & analytics' },
+      { name: 'Veeva CRM', detail: 'Life sciences' },
     ],
   },
   {

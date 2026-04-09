@@ -23,4 +23,22 @@ export const accomplishments = [
     icon: 'kaggle',
     tags: ['Machine Learning', 'Python', 'Data Science'],
   },
+  {
+    id: 'kaggle-grandmaster',
+    title: 'Kaggle Notebooks Grandmaster',
+    description:
+      'Achieved the Kaggle Notebooks Grandmaster tier — the highest rank on Kaggle for notebook contributions, awarded to a select group of top contributors worldwide.',
+    tags: ['Kaggle', 'Data Science', 'Community'],
+    link: {
+      url: 'https://www.kaggle.com/janiobachmann',
+      label: 'View Profile',
+    },
+  },
+  {
+    id: 'data-notes',
+    title: 'Featured in Kaggle Data Notes',
+    description:
+      'Selected for the Data Notes newsletter, a curated publication by Kaggle (2018–2019) that highlighted the best code, analytics, and data from across the platform.',
+    tags: ['Kaggle', 'Newsletter', 'Recognition'],
+  },
 ];

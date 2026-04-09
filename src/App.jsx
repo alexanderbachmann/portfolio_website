@@ -5,6 +5,7 @@ import BioGrid from './components/bio-grid';
 import TechStack from './components/tech-stack';
 import Experience from './components/experience';
 import MetricsStrip from './components/metrics';
+import Projects from './components/projects';
 import Accomplishments from './components/accomplishments';
 import Contact from './components/contact';
 import Footer from './components/footer';
@@ -39,6 +40,12 @@ function App() {
         </section>
 
         <SvgDivider variant="wave-a" fillColor="var(--color-bg-deep)" />
+
+        <section id="projects">
+          <Projects />
+        </section>
+
+        <SvgDivider variant="wave-b" fillColor="var(--color-bg-deep)" />
 
         <Accomplishments />
 

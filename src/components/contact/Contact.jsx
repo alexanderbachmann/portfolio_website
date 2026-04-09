@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Linkedin, Mail } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import './contact.css';
 
 const Contact = () => {
@@ -43,13 +43,6 @@ const Contact = () => {
           >
             <Linkedin size={18} />
             Connect on LinkedIn
-          </a>
-          <a
-            href="mailto:janio.bachmann@gmail.com"
-            className="contact-button secondary"
-          >
-            <Mail size={18} />
-            Send an Email
           </a>
         </motion.div>
       </div>

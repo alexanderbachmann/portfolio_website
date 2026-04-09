@@ -54,15 +54,3 @@
   transform: translateY(-2px);
   color: white;
 }
-
-.contact-button.secondary {
-  background: transparent;
-  color: var(--color-text-primary);
-  border: 2px solid var(--color-border);
-}
-
-.contact-button.secondary:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  transform: translateY(-2px);
-}

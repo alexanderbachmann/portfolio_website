@@ -31,9 +31,12 @@ const CartoonJanio = ({ className }) => (
       fill="none"
     />
 
-    {/* Shoes (brown) */}
-    <ellipse cx="68" cy="280" rx="14" ry="7" fill="hsl(25, 40%, 30%)" />
-    <ellipse cx="132" cy="280" rx="14" ry="7" fill="hsl(25, 40%, 30%)" />
+    {/* White sneakers */}
+    <ellipse cx="68" cy="280" rx="14" ry="7" fill="hsl(0, 0%, 92%)" />
+    <ellipse cx="132" cy="280" rx="14" ry="7" fill="hsl(0, 0%, 92%)" />
+    {/* Sole accent */}
+    <ellipse cx="68" cy="283" rx="13" ry="3" fill="hsl(0, 0%, 82%)" />
+    <ellipse cx="132" cy="283" rx="13" ry="3" fill="hsl(0, 0%, 82%)" />
 
     {/* === Torso (blue suit jacket) === */}
     <rect

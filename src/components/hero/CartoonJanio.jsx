@@ -8,14 +8,7 @@ const CartoonJanio = ({ className }) => (
     aria-hidden="true"
     role="img"
   >
-    <defs>
-      <linearGradient id="screen-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#818cf8" stopOpacity="0.5" />
-        <stop offset="100%" stopColor="hsl(20,88%,48%)" stopOpacity="0.5" />
-      </linearGradient>
-    </defs>
-
-    {/* === Legs (seated, dangling) === */}
+{/* === Legs (seated, dangling) === */}
     <path
       d="M72,205 Q70,230 66,258 Q64,270 68,275"
       stroke="hsl(220, 48%, 16%)"
@@ -244,38 +237,6 @@ const CartoonJanio = ({ className }) => (
     <circle cx="76" cy="100" r="7" fill="hsla(0,55%,62%,0.2)" />
     <circle cx="124" cy="100" r="7" fill="hsla(0,55%,62%,0.2)" />
 
-    {/* === Laptop on lap === */}
-    <g>
-      {/* Laptop base */}
-      <rect
-        x="72"
-        y="190"
-        width="56"
-        height="6"
-        rx="2"
-        fill="hsl(222,35%,16%)"
-      />
-      {/* Laptop screen */}
-      <rect
-        x="74"
-        y="170"
-        width="52"
-        height="22"
-        rx="3"
-        fill="hsl(222,38%,12%)"
-        stroke="hsl(222,30%,22%)"
-        strokeWidth="1"
-      />
-      {/* Screen glow */}
-      <rect
-        x="77"
-        y="173"
-        width="46"
-        height="16"
-        rx="2"
-        fill="url(#screen-glow)"
-      />
-    </g>
   </svg>
 );
 

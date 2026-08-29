@@ -37,11 +37,10 @@ Personal portfolio and blog for Janio Martinez Bachmann. Deployed on Vercel (Hob
 
 ## Git workflow (standing instruction from Janio)
 
-- After finishing a requested change, commit and push it **without asking**. Janio does not want to be prompted for commits or pushes.
+- After finishing a requested change, ship it **without asking**: commit, push, and get it to production. Janio does not want to be prompted for commits, pushes, pull requests, or merges.
 - Before pushing: `npm run lint` and `npm run build` must pass, and `git status` must show no secret files (`.env.local`, `.vercel/`).
-- Commit on the current feature branch (currently `next-migration`) with a descriptive message. If the branch has no open pull request against `main`, open one with `gh pr create`.
-- Merging into `main` deploys to production. Merge only when Janio asks; say in the recap that the PR is ready to merge.
-- Vercel builds every push (preview deployments sit behind Vercel's login; production is the public site).
+- Work directly on `main` (pushing `main` deploys production on Vercel). If work happens on a feature branch instead, open a pull request with `gh pr create` and merge it with `gh pr merge --merge` in the same session once the checks pass.
+- After pushing, confirm the Vercel deployment is Ready (`vercel ls portfolio-website`) and spot-check the live site; include the production URL in the recap.
 
 ## Hygiene
 

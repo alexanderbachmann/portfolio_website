@@ -30,8 +30,8 @@
   padding: 1.5px;
   background: linear-gradient(
     135deg,
-    var(--color-gradient-start),
-    var(--color-gradient-end)
+    var(--color-navy-600),
+    var(--color-muted)
   );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,

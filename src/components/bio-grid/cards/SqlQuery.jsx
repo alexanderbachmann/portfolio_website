@@ -8,7 +8,7 @@ const Str = ({ children }) => (
   <span style={{ color: 'var(--color-accent)' }}>{children}</span>
 );
 const Col = ({ children }) => (
-  <span style={{ color: '#818cf8' }}>{children}</span>
+  <span style={{ color: 'var(--color-chart-2)' }}>{children}</span>
 );
 
 const SqlQuery = () => {

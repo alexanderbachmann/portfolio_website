@@ -15,7 +15,7 @@ export const projects = [
     id: 'ds-jobs',
     title: 'Data Science Jobs Analytics',
     description:
-      'Interactive dashboard analyzing data science job market trends — salaries, skills demand, and geographic distribution. Built to help professionals and hiring managers understand the evolving landscape.',
+      'Interactive dashboard analyzing data science job market trends: salaries, skills demand, and geographic distribution. Built to help professionals and hiring managers understand the evolving landscape.',
     tags: ['R', 'Shiny', 'Analytics', 'Labor Market'],
     icon: 'BarChart3',
     link: {

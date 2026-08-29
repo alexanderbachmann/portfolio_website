@@ -54,7 +54,7 @@ const SqlQuery = () => {
           <Keyword>SELECT</Keyword> <Col>name</Col>, <Col>role</Col>, <Col>passion</Col>{'\n'}
           <Keyword>FROM</Keyword> <Col>data_professionals</Col>{'\n'}
           <Keyword>WHERE</Keyword> <Col>creativity</Col> = <Str>'HIGH'</Str>{'\n'}
-          {'  '}<Keyword>AND</Keyword> <Col>location</Col> = <Str>'Barcelona'</Str>;
+          {'  '}<Keyword>AND</Keyword> <Col>role</Col> = <Str>'Global Product Owner'</Str>;
         </pre>
 
         {!ran && (

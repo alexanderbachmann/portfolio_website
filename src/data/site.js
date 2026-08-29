@@ -1,20 +1,21 @@
+const LINKEDIN_URL =
+  'https://www.linkedin.com/in/janio-martinez-bachmann-26040ba1/';
+
 export const site = {
   name: 'Janio Martinez Bachmann',
   shortName: 'JMB',
   role: 'Global Product Owner · Data & BI',
   tagline:
-    'Data without ownership is just noise. I take products from vision to scalable adoption—aligning teams, shaping strategy, and building solutions designed to grow with the business.',
+    'Data without ownership is just noise. I take products from vision to scalable adoption, aligning teams, shaping strategy, and building solutions designed to grow with the business.',
   description:
-    'Janio Martinez Bachmann — Global Product Owner specializing in Data & BI. 6+ years driving product outcomes at Google, Roche, ECB, and Boehringer Ingelheim.',
+    'Janio Martinez Bachmann: Global Product Owner specializing in Data & BI. 6+ years driving product outcomes at Google, Roche, ECB, and Boehringer Ingelheim.',
   url: 'https://portfolio-website-two-hazel-81.vercel.app',
-  email: 'janiobachmann@gmail.com',
+  /* The only contact channel on the site. No personal email anywhere. */
+  linkedin: LINKEDIN_URL,
 };
 
 export const socials = [
-  {
-    href: 'https://www.linkedin.com/in/janio-martinez-bachmann-26040ba1/',
-    label: 'LinkedIn',
-  },
+  { href: LINKEDIN_URL, label: 'LinkedIn' },
   { href: 'https://github.com/alexanderbachmann', label: 'GitHub' },
   { href: 'https://www.kaggle.com/janiobachmann', label: 'Kaggle' },
   {
@@ -48,7 +49,7 @@ export const metrics = [
   {
     value: 6,
     suffix: '',
-    label: 'Global Companies',
+    label: 'Companies',
     description: 'Including Google, ECB, Roche',
   },
 ];

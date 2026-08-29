@@ -1,12 +1,32 @@
-# React + Vite
+# Portfolio website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio and blog, built with Next.js 16 (App Router) and deployed on Vercel.
 
-Currently, two official plugins are available:
+## Develop
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+cp .env.example .env.local   # then fill in the values (see below)
+npm run dev
+```
 
-## Expanding the ESLint configuration
+`.env.local` is git-ignored. Vercel stores the database and Blob variables as Sensitive, so they cannot be pulled with the CLI: copy `DATABASE_URL` from Vercel > Storage > the Neon database > Quickstart, `BLOB_READ_WRITE_TOKEN` from the Blob store's Quickstart, and use the same `AUTH_SECRET` / `ADMIN_PASSWORD` you set in Vercel > Settings > Environment Variables.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Blog database
+
+Posts live in Neon Postgres (connected through the Vercel Marketplace) and images in Vercel Blob.
+
+```bash
+npm run db:migrate        # create or update the schema (idempotent)
+npm run db:seed-legacy    # import the original MDX post (no-op if it exists)
+```
+
+`npm run build` runs both scripts before `next build`, so each Vercel deployment keeps the database schema current on its own.
+
+## Writing posts
+
+Sign in at `/admin/login` with `ADMIN_PASSWORD`, then use `/admin` to create, edit, preview, publish, and delete posts. The editor is Notion-style: type `/` for headings, lists, checklists, quotes, code blocks, tables, and images.
+
+## Conventions
+
+See `CLAUDE.md` for the stack notes, the design rules, and the writing rules (no em or en dashes in user-facing text; contact goes through LinkedIn only).

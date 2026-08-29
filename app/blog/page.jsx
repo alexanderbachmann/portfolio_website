@@ -8,8 +8,11 @@ export const metadata = {
   alternates: { canonical: '/blog' },
 };
 
-export default function BlogIndexPage() {
-  const posts = getAllPosts();
+/* ISR: refreshed hourly and immediately after every admin write. */
+export const revalidate = 3600;
+
+export default async function BlogIndexPage() {
+  const posts = await getAllPosts();
 
   return (
     <main className="section blog-index">
@@ -22,14 +25,16 @@ export default function BlogIndexPage() {
       </header>
 
       {posts.length === 0 ? (
-        <p className="blog-empty">No posts yet — check back soon.</p>
+        <p className="blog-empty">No posts yet. Check back soon.</p>
       ) : (
         <ul className="blog-list">
           {posts.map((post) => (
             <li key={post.slug}>
               <Link href={`/blog/${post.slug}`} className="post-card">
                 <div className="post-card-meta">
-                  <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  <time dateTime={post.publishedAt}>
+                    {formatDate(post.publishedAt)}
+                  </time>
                   <span aria-hidden>·</span>
                   <span>{post.readingTime}</span>
                 </div>

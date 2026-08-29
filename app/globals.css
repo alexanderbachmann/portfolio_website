@@ -490,11 +490,14 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
   color: var(--color-white);
 }
 
+/* Code blocks: rehype-pretty-code wraps each pre in a figure; the copy
+   button is portaled into that wrapper after hydration. */
+.prose figure[data-rehype-pretty-code-figure],
 .prose-pre-wrapper {
   position: relative;
 }
 
-.prose-pre-wrapper pre {
+.prose pre {
   background: var(--color-navy-900);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-md);
@@ -502,6 +505,13 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
   overflow-x: auto;
   font-size: var(--text-sm);
   line-height: 1.7;
+}
+
+.prose pre code {
+  display: block;
+  background: none;
+  padding: 0;
+  font-size: inherit;
 }
 
 .prose-pre-copy {
@@ -519,29 +529,115 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
   transition: opacity var(--duration) var(--ease-out);
 }
 
+.prose figure:hover .prose-pre-copy,
 .prose-pre-wrapper:hover .prose-pre-copy,
 .prose-pre-copy:focus-visible {
   opacity: 1;
 }
 
-.prose-callout {
-  display: flex;
-  gap: var(--space-md);
-  padding: var(--space-lg);
-  border: 1px solid var(--color-line);
+/* --- Elements the editor can emit that MDX never did --- */
+.prose h4 {
+  color: var(--color-white);
+  margin-top: var(--space-xl);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.prose img {
   border-radius: var(--radius-md);
-  background: var(--color-navy-800);
+  border: 1px solid var(--color-line);
+}
+
+.prose figure {
+  margin: 0;
+}
+
+.prose figcaption {
+  margin-top: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: var(--text-base);
 }
 
-.prose-callout svg {
-  flex-shrink: 0;
-  margin-top: 3px;
+.prose th,
+.prose td {
+  border: 1px solid var(--color-line);
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background: var(--color-navy-800);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.prose td > p,
+.prose th > p,
+.prose li > p {
+  margin: 0;
+}
+
+.prose li:has(> input[type="checkbox"]) {
+  list-style: none;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-left: calc(-1 * var(--space-lg));
+}
+
+.prose li > input[type="checkbox"] {
+  accent-color: var(--color-muted);
+  margin-top: 0.45em;
+  pointer-events: none;
+}
+
+.prose [data-nesting-level="1"] {
+  margin-left: var(--space-lg);
+}
+
+.prose details > summary {
+  cursor: pointer;
+}
+
+/* --- Owner conveniences --- */
+.blog-cover {
+  width: 100%;
+  margin-top: var(--space-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-line);
+}
+
+.blog-edit-link {
+  margin-left: auto;
   color: var(--color-muted);
 }
 
-.prose-callout--warning svg { color: var(--color-chart-4); }
-.prose-callout--tip svg { color: var(--color-chart-3); }
+.blog-preview-banner {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-off-white);
+  background: var(--color-accent-soft);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.blog-preview-banner a {
+  text-decoration: underline;
+}
 
 /* ============================================================
    REDUCED MOTION

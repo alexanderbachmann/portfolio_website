@@ -80,7 +80,7 @@ const CountriesMap = () => {
                 strokeWidth={2}
                 style={{ transition: 'all 0.2s ease', cursor: 'pointer' }}
                 data-tooltip-id="map-tooltip"
-                data-tooltip-content={`${pin.city} — ${pin.years}`}
+                data-tooltip-content={`${pin.city} · ${pin.years}`}
               />
               {/* Step number */}
               <text

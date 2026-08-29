@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { navLinks } from '@/data/site';
+import { navLinks, site } from '@/data/site';
+import OwnerOnly from '@/components/admin/OwnerOnly';
 import './nav.css';
 
 const SECTION_IDS = ['about', 'experience', 'projects', 'contact'];
@@ -44,6 +45,9 @@ const NavBar = () => {
     return () => observer.disconnect();
   }, [isHome, updateActive]);
 
+  /* The admin area has its own bar. */
+  if (pathname.startsWith('/admin')) return null;
+
   const toggleMenu = () => setIsMenuOpen((open) => !open);
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -70,10 +74,22 @@ const NavBar = () => {
               </Link>
             </li>
           ))}
+          <OwnerOnly>
+            <li>
+              <Link href="/admin" className={isActive('/admin') ? 'active' : ''}>
+                Write
+              </Link>
+            </li>
+          </OwnerOnly>
           <li>
-            <Link href="/#contact" className="nav-cta">
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-cta"
+            >
               Get in touch
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -110,10 +126,23 @@ const NavBar = () => {
               </Link>
             </li>
           ))}
-          <li style={{ transitionDelay: `${(navLinks.length + 1) * 0.08}s` }}>
-            <Link href="/#contact" className="nav-cta" onClick={closeMenu}>
+          <OwnerOnly>
+            <li style={{ transitionDelay: `${(navLinks.length + 1) * 0.08}s` }}>
+              <Link href="/admin" onClick={closeMenu}>
+                Write
+              </Link>
+            </li>
+          </OwnerOnly>
+          <li style={{ transitionDelay: `${(navLinks.length + 2) * 0.08}s` }}>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-cta"
+              onClick={closeMenu}
+            >
               Get in touch
-            </Link>
+            </a>
           </li>
         </ul>
       </div>

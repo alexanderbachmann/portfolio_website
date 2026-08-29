@@ -8,8 +8,10 @@
   right: 0;
   z-index: 100;
   height: var(--nav-height);
-  background: hsl(222, 47%, 8%);
-  border-bottom: 1px solid var(--color-border);
+  background: hsl(222 47% 6% / 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-line);
   will-change: transform;
 }
 
@@ -25,13 +27,11 @@
 
 /* --- Logo --- */
 .nav-logo {
+  font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 700;
   letter-spacing: 0.02em;
-  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-white);
 }
 
 .nav-logo:hover {
@@ -81,6 +81,27 @@
 .nav-links a:hover::after,
 .nav-links a.active::after {
   transform: scaleX(1);
+}
+
+/* --- CTA (the one orange element in the nav) --- */
+.nav-links a.nav-cta,
+.nav-mobile-menu a.nav-cta {
+  background: var(--color-accent);
+  color: hsl(0 0% 100%);
+  padding: 0.45em 1.1em;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: background-color var(--duration) var(--ease-out);
+}
+
+.nav-links a.nav-cta:hover,
+.nav-mobile-menu a.nav-cta:hover {
+  background: var(--color-accent-hover);
+  color: hsl(0 0% 100%);
+}
+
+.nav-links a.nav-cta::after {
+  display: none;
 }
 
 /* --- Mobile Toggle --- */

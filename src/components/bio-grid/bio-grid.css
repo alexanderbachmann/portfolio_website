@@ -23,7 +23,6 @@
     "map"
     "sql"
     "profile"
-    "metrics"
     "cat"
     "book"
     "cv";
@@ -36,8 +35,8 @@
     grid-template-areas:
       "map      map"
       "sql      profile"
-      "metrics  cat"
-      "book     cv";
+      "cat      book"
+      "cv       cv";
   }
 }
 
@@ -46,7 +45,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas:
       "map      map      sql"
-      "profile  metrics  cat"
-      "book     cv       cv";
+      "profile  cat      book"
+      "cv       cv      cv";
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FileDown } from 'lucide-react';
-import CV from '../../../assets/CV.pdf';
+
+const CV = '/CV.pdf';
 
 const ExportCV = () => {
   const [hovering, setHovering] = useState(false);

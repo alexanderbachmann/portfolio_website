@@ -1,13 +1,19 @@
+'use client';
+
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'motion/react';
-import CountriesMap from './cards/CountriesMap';
 import SqlQuery from './cards/SqlQuery';
 import ProfileCard from './cards/ProfileCard';
-import MetricCounters from './cards/MetricCounters';
 import CatDashboard from './cards/CatDashboard';
 import BookCard from './cards/BookCard';
 import ExportCV from './cards/ExportCV';
 import './bio-grid.css';
+
+/* d3/topojson geometry + react-tooltip are DOM-dependent — client-only */
+const CountriesMap = dynamic(() => import('./cards/CountriesMap'), {
+  ssr: false,
+});
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -22,7 +28,6 @@ const cards = [
   { key: 'map', area: 'map', Component: CountriesMap },
   { key: 'sql', area: 'sql', Component: SqlQuery },
   { key: 'profile', area: 'profile', Component: ProfileCard },
-  { key: 'metrics', area: 'metrics', Component: MetricCounters },
   { key: 'cat', area: 'cat', Component: CatDashboard },
   { key: 'book', area: 'book', Component: BookCard },
   { key: 'cv', area: 'cv', Component: ExportCV },

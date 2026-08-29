@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import SectionHeading from '../shared/SectionHeading';
 import FeaturedCard from './FeaturedCard';

@@ -1,56 +1,74 @@
 .contact-section {
   padding: var(--space-4xl) var(--space-xl);
-  text-align: center;
 }
 
 .contact-wrapper {
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
+  text-align: center;
+}
+
+.contact-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: var(--space-md);
 }
 
 .contact-heading {
+  font-size: clamp(var(--text-2xl), 5vw, var(--text-3xl));
+  color: var(--color-white);
   margin-bottom: var(--space-lg);
 }
 
 .contact-description {
+  color: var(--color-off-white);
   font-size: var(--text-lg);
-  color: var(--color-text-secondary);
-  line-height: var(--leading-normal);
   margin-bottom: var(--space-2xl);
 }
 
 .contact-links {
   display: flex;
   justify-content: center;
-  gap: var(--space-md);
   flex-wrap: wrap;
+  gap: var(--space-md);
 }
 
 .contact-button {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-xl);
-  border-radius: var(--radius-md);
-  font-size: var(--text-base);
+  padding: 0.7em 1.5em;
+  border-radius: var(--radius-full);
   font-weight: 600;
-  text-decoration: none;
-  transition: background-color var(--duration) var(--ease-out),
-              border-color var(--duration) var(--ease-out),
-              color var(--duration) var(--ease-out),
-              box-shadow var(--duration) var(--ease-out),
-              transform var(--duration) var(--ease-out);
+  transition:
+    background-color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    color var(--duration) var(--ease-out),
+    transform var(--duration) var(--ease-out);
 }
 
+/* The one orange CTA in this viewport */
 .contact-button.primary {
   background: var(--color-accent);
-  color: white;
-  border: 2px solid var(--color-accent);
+  color: hsl(0 0% 100%);
 }
 
 .contact-button.primary:hover {
   background: var(--color-accent-hover);
-  box-shadow: var(--shadow-glow);
+  color: hsl(0 0% 100%);
   transform: translateY(-2px);
-  color: white;
+}
+
+.contact-button.ghost {
+  border: 1px solid var(--color-navy-600);
+  color: var(--color-off-white);
+}
+
+.contact-button.ghost:hover {
+  border-color: var(--color-muted);
+  color: var(--color-white);
+  transform: translateY(-2px);
 }

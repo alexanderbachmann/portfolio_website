@@ -9,24 +9,24 @@ const ProjectCard = ({ data, index = 0 }) => {
 
   return (
     <motion.div
-      className="accomplishment-card"
-      initial={{ opacity: 0, y: 30 }}
+      className="project-card"
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
     >
-      <div className="accomplishment-card-header">
-        <Icon size={20} className="accomplishment-card-icon" />
-        <h3 className="accomplishment-card-title">{data.title}</h3>
+      <div className="project-card-header">
+        <Icon size={20} className="project-card-icon" />
+        <h3 className="project-card-title">{data.title}</h3>
       </div>
 
-      <p className="accomplishment-card-description">{data.description}</p>
+      <p className="project-card-description">{data.description}</p>
 
-      <div className="accomplishment-card-footer">
+      <div className="project-card-footer">
         {data.tags && (
-          <div className="accomplishment-card-tags">
+          <div className="project-card-tags">
             {data.tags.map((tag) => (
-              <span key={tag} className="accomplishment-card-tag">{tag}</span>
+              <span key={tag} className="project-card-tag">{tag}</span>
             ))}
           </div>
         )}
@@ -36,7 +36,7 @@ const ProjectCard = ({ data, index = 0 }) => {
             href={data.link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="featured-link"
+            className="project-card-link"
           >
             {data.link.label}
             <ExternalLink size={14} />

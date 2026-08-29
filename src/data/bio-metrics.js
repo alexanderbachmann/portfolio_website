@@ -4,7 +4,7 @@ export const sqlQuery = {
   code: `SELECT name, role, passion
 FROM data_professionals
 WHERE creativity = 'HIGH'
-  AND location = 'Barcelona';`,
+  AND role = 'Global Product Owner';`,
   result: {
     columns: ['name', 'role', 'passion'],
     row: ['Janio', 'Global Product Owner', 'Turning complexity into decisions'],
@@ -35,14 +35,7 @@ export const catStats = {
 export const currentBook = {
   title: 'Inspired: How to Create Tech Products Customers Love',
   author: 'Marty Cagan',
-  review: 'The definitive guide to product management — reshaping how I think about building data products.',
+  review: 'The definitive guide to product management, reshaping how I think about building data products.',
   booksThisYear: 12,
   goodreadsUrl: 'https://www.goodreads.com/user/show/139128464-janio-martinez-bachmann',
 };
-
-export const achievementMetrics = [
-  { value: 6, label: 'Years in Data & Product', description: 'Driving product outcomes since 2019' },
-  { value: 4, label: 'Countries', description: 'Dominican Republic, Germany, Ireland, Spain' },
-  { value: 5, suffix: 'days', prefix: '', label: 'to 0.5 Days', description: 'Reporting automation at Roche' },
-  { value: 6, label: 'Global Companies', description: 'Including Google, ECB, Roche, Boehringer Ingelheim' },
-];

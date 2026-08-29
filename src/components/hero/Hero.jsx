@@ -9,7 +9,7 @@ import { metrics, site } from '@/data/site';
 import './hero.css';
 
 const socials = [
-  { href: 'https://www.linkedin.com/in/janio-martinez-bachmann-26040ba1/', icon: Linkedin, label: 'LinkedIn' },
+  { href: site.linkedin, icon: Linkedin, label: 'LinkedIn' },
   { href: 'https://github.com/alexanderbachmann', icon: Github, label: 'GitHub' },
   {
     href: 'https://www.kaggle.com/janiobachmann',
@@ -73,15 +73,18 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p className="hero-description" {...fadeUp(0.2)}>
-            Data without ownership is just noise. I take products from vision
-            to scalable adoption&mdash;aligning teams, shaping strategy, and
-            building solutions designed to grow with the business.
+            {site.tagline}
           </motion.p>
 
           <motion.div className="hero-actions" {...fadeUp(0.3)}>
-            <Link href="/#contact" className="hero-btn hero-btn--primary">
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-btn hero-btn--primary"
+            >
               Get in touch
-            </Link>
+            </a>
             <Link href="/blog" className="hero-btn hero-btn--ghost">
               Read the blog
             </Link>

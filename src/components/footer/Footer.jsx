@@ -2,10 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { site } from '@/data/site';
 import './footer.css';
 
 const Footer = () => {
+  const pathname = usePathname();
+  /* The admin area has its own chrome. */
+  if (pathname.startsWith('/admin')) return null;
+
   return (
     <footer className="footer">
       <div className="footer-inner">

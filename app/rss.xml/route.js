@@ -1,7 +1,8 @@
 import { getAllPosts } from '@/lib/posts';
 import { site } from '@/data/site';
 
-export const dynamic = 'force-static';
+/* Cached and regenerated hourly; admin writes revalidate it immediately. */
+export const revalidate = 3600;
 
 const escapeXml = (str) =>
   str
@@ -10,8 +11,8 @@ const escapeXml = (str) =>
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 
-export function GET() {
-  const posts = getAllPosts();
+export async function GET() {
+  const posts = await getAllPosts();
 
   const items = posts
     .map(
@@ -20,7 +21,7 @@ export function GET() {
       <link>${site.url}/blog/${post.slug}</link>
       <guid>${site.url}/blog/${post.slug}</guid>
       <description>${escapeXml(post.description)}</description>
-      <pubDate>${new Date(post.date).toUTCString()}</pubDate>
+      <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
     </item>`
     )
     .join('\n');
@@ -28,7 +29,7 @@ export function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>${escapeXml(site.name)} — Blog</title>
+    <title>${escapeXml(site.name)} Blog</title>
     <link>${site.url}/blog</link>
     <description>${escapeXml(site.description)}</description>
     <language>en</language>

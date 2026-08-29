@@ -21,7 +21,7 @@ export default function NotFound() {
           fontSize: 'var(--text-sm)',
         }}
       >
-        404 — page not found
+        404: page not found
       </p>
       <h1 style={{ fontSize: 'var(--text-3xl)' }}>Nothing at this address.</h1>
       <Link href="/" style={{ color: 'var(--color-accent)' }}>

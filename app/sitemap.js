@@ -1,10 +1,12 @@
 import { getAllPosts } from '@/lib/posts';
 import { site } from '@/data/site';
 
-export default function sitemap() {
-  const posts = getAllPosts().map((post) => ({
+export const revalidate = 3600;
+
+export default async function sitemap() {
+  const posts = (await getAllPosts()).map((post) => ({
     url: `${site.url}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.updatedAt ?? post.publishedAt),
   }));
 
   return [

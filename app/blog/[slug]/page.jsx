@@ -1,23 +1,25 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import rehypePrettyCode from 'rehype-pretty-code';
-import { getAllPosts, getPost, formatDate } from '@/lib/posts';
-import { mdxComponents } from '@/components/mdx/mdx-components';
+import { getAllPosts, getPost } from '@/lib/posts';
+import PostArticle from '@/components/blog/PostArticle';
 import { site } from '@/data/site';
 
-const prettyCodeOptions = {
-  theme: 'one-dark-pro',
-  keepBackground: false,
-};
+/* ISR: served from cache, refreshed hourly as a safety net, and
+   revalidated immediately by every admin save/publish/delete. */
+export const revalidate = 3600;
 
-export function generateStaticParams() {
-  return getAllPosts().map((post) => ({ slug: post.slug }));
+export async function generateStaticParams() {
+  try {
+    const posts = await getAllPosts();
+    return posts.map((post) => ({ slug: post.slug }));
+  } catch (err) {
+    console.warn('generateStaticParams: skipping prerender,', err.message);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) return {};
 
   return {
@@ -29,7 +31,8 @@ export async function generateMetadata({ params }) {
       title: post.title,
       description: post.description,
       url: `/blog/${post.slug}`,
-      publishedTime: post.date,
+      publishedTime: post.publishedAt,
+      ...(post.coverUrl ? { images: [post.coverUrl] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
@@ -41,7 +44,7 @@ export async function generateMetadata({ params }) {
 
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) notFound();
 
   const jsonLd = {
@@ -49,50 +52,20 @@ export default async function BlogPostPage({ params }) {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.description,
-    datePublished: post.date,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
     author: { '@type': 'Person', name: site.name, url: site.url },
     url: `${site.url}/blog/${post.slug}`,
+    ...(post.coverUrl ? { image: post.coverUrl } : {}),
   };
 
   return (
-    <main className="section blog-post">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
-      <header className="blog-post-header">
-        <Link href="/blog" className="blog-back">
-          ← All posts
-        </Link>
-        <div className="post-card-meta">
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span aria-hidden>·</span>
-          <span>{post.readingTime}</span>
-        </div>
-        <h1>{post.title}</h1>
-        {post.tags.length > 0 && (
-          <div className="post-card-tags">
-            {post.tags.map((tag) => (
-              <span key={tag} className="post-tag">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </header>
-
-      <article className="prose">
-        <MDXRemote
-          source={post.content}
-          components={mdxComponents}
-          options={{
-            mdxOptions: {
-              rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
-            },
-          }}
-        />
-      </article>
-    </main>
+      <PostArticle post={post} />
+    </>
   );
 }

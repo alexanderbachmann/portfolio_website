@@ -44,7 +44,7 @@ const BioGrid = () => {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.5 }}
         >
-          A few things about how I work and who I am &mdash;
+          A few things about how I work and who I am:
         </motion.p>
 
         <div className="bio-grid">

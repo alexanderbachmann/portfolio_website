@@ -1,105 +1,177 @@
 .hero {
-  min-height: 70vh;
+  min-height: calc(88vh - var(--nav-height));
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: var(--space-4xl) var(--space-xl);
-  position: relative;
+  padding: calc(var(--nav-height) + var(--space-3xl)) var(--space-xl) var(--space-3xl);
 }
 
-/* subtle radial glow behind hero text */
-.hero::before {
-  content: '';
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    hsla(20, 88%, 48%, 0.08) 0%,
-    transparent 70%
-  );
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+  align-items: center;
+  gap: var(--space-2xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
 }
 
 .hero-inner {
-  max-width: 720px;
-  position: relative;
-  z-index: 1;
+  max-width: 640px;
 }
 
-.hero-name {
-  font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
-  font-weight: 700;
-  line-height: var(--leading-tight);
-  margin-bottom: var(--space-md);
-  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-title {
-  font-size: var(--text-xl);
-  color: var(--color-text-secondary);
+/* --- Kicker --- */
+.hero-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
   font-weight: 500;
-  margin-bottom: var(--space-xl);
-  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: var(--space-lg);
 }
 
+/* --- Name --- */
+.hero-name {
+  font-size: var(--text-hero);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+}
+
+/* The one orange highlight in the hero (orange discipline rule #1) */
+.hero-name-accent {
+  color: var(--color-accent);
+}
+
+/* --- Description --- */
 .hero-description {
   font-size: var(--text-lg);
-  color: var(--color-text-secondary);
+  color: var(--color-off-white);
   line-height: var(--leading-normal);
-  margin-bottom: var(--space-2xl);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  margin-bottom: var(--space-xl);
+  max-width: 540px;
 }
 
+/* --- Actions --- */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7em 1.5em;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  font-size: var(--text-base);
+  transition:
+    background-color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    color var(--duration) var(--ease-out),
+    transform var(--duration) var(--ease-out);
+}
+
+.hero-btn--primary {
+  background: var(--color-accent);
+  color: hsl(0 0% 100%);
+}
+
+.hero-btn--primary:hover {
+  background: var(--color-accent-hover);
+  color: hsl(0 0% 100%);
+  transform: translateY(-2px);
+}
+
+.hero-btn--ghost {
+  border: 1px solid var(--color-navy-600);
+  color: var(--color-off-white);
+}
+
+.hero-btn--ghost:hover {
+  border-color: var(--color-muted);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
+/* --- Socials --- */
 .hero-socials {
   display: flex;
-  justify-content: center;
-  gap: var(--space-md);
+  gap: var(--space-sm);
+  margin-left: var(--space-sm);
 }
 
 .hero-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: var(--radius-full);
-  color: var(--color-text-secondary);
-  background: var(--color-bg-surface);
-  border: 1px solid var(--color-border);
-  transition: color var(--duration) var(--ease-out),
-              border-color var(--duration) var(--ease-out),
-              box-shadow var(--duration) var(--ease-out),
-              transform var(--duration) var(--ease-out);
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  transition:
+    color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    transform var(--duration) var(--ease-out);
 }
 
 .hero-social-link:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-3px);
+  color: var(--color-white);
+  border-color: var(--color-navy-600);
+  transform: translateY(-2px);
+}
+
+/* --- Stat row (single source: src/data/site.js metrics) --- */
+.hero-stats {
+  display: flex;
+  gap: var(--space-xl);
+  border-top: 1px solid var(--color-line);
+  padding-top: var(--space-lg);
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hero-stat + .hero-stat {
+  border-left: 1px solid var(--color-line);
+  padding-left: var(--space-xl);
+}
+
+.hero-stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-white);
+  line-height: 1.1;
+}
+
+.hero-stat-label {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
 }
 
 /* ========================================
-   CARTOON CHARACTER
+   CARTOON CHARACTER (companion column)
    ======================================== */
 .cartoon-janio-wrapper {
-  position: absolute;
-  bottom: 0;
-  right: 12%;
-  transform: translateY(40%);
-  z-index: 2;
-  width: clamp(90px, 12vw, 160px);
+  /* Illustration palette, keyed to the navy scale */
+  --cj-suit: hsl(222 42% 17%);
+  --cj-suit-dark: hsl(222 46% 13%);
+  --cj-suit-leg: hsl(222 40% 15%);
+  --cj-suit-shadow: hsl(222 45% 11%);
+  --cj-outline: var(--color-navy-950);
+
+  justify-self: center;
+  width: clamp(140px, 16vw, 220px);
   pointer-events: none;
 }
 
@@ -109,22 +181,50 @@
   height: auto;
 }
 
-@media screen and (max-width: 1024px) {
-  .cartoon-janio-wrapper {
-    right: 6%;
-    width: clamp(80px, 14vw, 130px);
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media screen and (max-width: 900px) {
+  .hero {
+    text-align: center;
   }
-}
 
-@media screen and (max-width: 640px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-inner {
+    margin: 0 auto;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions,
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .hero-stat {
+    align-items: center;
+  }
+
   .cartoon-janio-wrapper {
-    right: 4%;
-    width: 70px;
-    transform: translateY(35%);
+    width: clamp(110px, 22vw, 150px);
   }
 }
 
 @media screen and (max-width: 480px) {
+  .hero-stats {
+    gap: var(--space-lg);
+  }
+
+  .hero-stat + .hero-stat {
+    padding-left: var(--space-lg);
+  }
+
   .cartoon-janio-wrapper {
     display: none;
   }

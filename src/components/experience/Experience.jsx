@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
@@ -65,7 +67,7 @@ const Experience = () => {
                 <div className="exp-entry-header">
                   {exp.logo && (
                     <img
-                      src={exp.logo}
+                      src={exp.logo.src}
                       alt={`${exp.company} logo`}
                       className="exp-entry-logo"
                     />

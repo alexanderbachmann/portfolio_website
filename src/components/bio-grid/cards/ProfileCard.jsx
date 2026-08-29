@@ -37,7 +37,7 @@ const ProfileCard = () => {
       }}
     >
       <img
-        src={profilePic}
+        src={profilePic.src}
         alt="Janio Martinez Bachmann"
         style={{
           width: '140px',

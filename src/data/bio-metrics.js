@@ -1,9 +1,4 @@
-export const metrics = [
-  { label: 'Years in Data & Product', value: 6, icon: 'TrendingUp' },
-  { label: 'Countries Lived In', value: 5, icon: 'Globe' },
-  { label: 'World-Class Companies', value: 6, icon: 'Building2' },
-  { label: 'Data Products Shaped', value: 10, suffix: '+', icon: 'Layers' },
-];
+/* Headline metrics live in src/data/site.js */
 
 export const sqlQuery = {
   code: `SELECT name, role, passion

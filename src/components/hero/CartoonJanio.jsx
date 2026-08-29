@@ -11,14 +11,14 @@ const CartoonJanio = ({ className }) => (
 {/* === Legs (seated, dangling) === */}
     <path
       d="M72,205 Q70,230 66,258 Q64,270 68,275"
-      stroke="hsl(220, 48%, 16%)"
+      stroke="var(--cj-suit-leg)"
       strokeWidth="20"
       strokeLinecap="round"
       fill="none"
     />
     <path
       d="M128,205 Q130,230 134,258 Q136,270 132,275"
-      stroke="hsl(220, 48%, 16%)"
+      stroke="var(--cj-suit-leg)"
       strokeWidth="20"
       strokeLinecap="round"
       fill="none"
@@ -38,19 +38,19 @@ const CartoonJanio = ({ className }) => (
       width="84"
       height="82"
       rx="22"
-      fill="hsl(220, 50%, 18%)"
+      fill="var(--cj-suit)"
     />
     {/* Suit lapels */}
     <path
       d="M82,128 L92,152 L100,138"
-      fill="hsl(220, 55%, 15%)"
-      stroke="hsl(220, 45%, 12%)"
+      fill="var(--cj-suit-dark)"
+      stroke="var(--cj-suit-shadow)"
       strokeWidth="0.8"
     />
     <path
       d="M118,128 L108,152 L100,138"
-      fill="hsl(220, 55%, 15%)"
-      stroke="hsl(220, 45%, 12%)"
+      fill="var(--cj-suit-dark)"
+      stroke="var(--cj-suit-shadow)"
       strokeWidth="0.8"
     />
     {/* White shirt visible between lapels */}
@@ -92,7 +92,7 @@ const CartoonJanio = ({ className }) => (
     {/* === Left arm (resting on surface) === */}
     <path
       d="M58,148 Q36,168 40,198"
-      stroke="hsl(220, 50%, 18%)"
+      stroke="var(--cj-suit)"
       strokeWidth="18"
       strokeLinecap="round"
       fill="none"
@@ -103,7 +103,7 @@ const CartoonJanio = ({ className }) => (
     {/* === Right arm (waving!) === */}
     <path
       d="M142,148 Q164,132 162,105"
-      stroke="hsl(220, 50%, 18%)"
+      stroke="var(--cj-suit)"
       strokeWidth="18"
       strokeLinecap="round"
       fill="none"
@@ -197,8 +197,8 @@ const CartoonJanio = ({ className }) => (
     <ellipse cx="84" cy="88" rx="5.5" ry="6" fill="none" stroke="hsl(210, 60%, 35%)" strokeWidth="1" />
     <ellipse cx="116" cy="88" rx="5.5" ry="6" fill="none" stroke="hsl(210, 60%, 35%)" strokeWidth="1" />
     {/* Pupils */}
-    <circle cx="84" cy="88" r="2.2" fill="hsl(222, 47%, 8%)" />
-    <circle cx="116" cy="88" r="2.2" fill="hsl(222, 47%, 8%)" />
+    <circle cx="84" cy="88" r="2.2" fill="var(--cj-outline)" />
+    <circle cx="116" cy="88" r="2.2" fill="var(--cj-outline)" />
     {/* Eye highlights */}
     <circle cx="86" cy="86" r="2" fill="white" opacity="0.9" />
     <circle cx="118" cy="86" r="2" fill="white" opacity="0.9" />
@@ -222,7 +222,7 @@ const CartoonJanio = ({ className }) => (
     {/* Smile with teeth */}
     <path
       d="M88,104 Q100,116 112,104"
-      stroke="hsl(222,47%,8%)"
+      stroke="var(--cj-outline)"
       strokeWidth="2.5"
       strokeLinecap="round"
       fill="none"

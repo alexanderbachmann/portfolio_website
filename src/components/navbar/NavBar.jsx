@@ -1,17 +1,19 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { navLinks } from '@/data/site';
 import './nav.css';
 
-const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Competencies', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
-];
+const SECTION_IDS = ['about', 'experience', 'projects', 'contact'];
 
-const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
+const NavBar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('about');
   const activeSectionRef = useRef('about');
+  const pathname = usePathname();
+  const isHome = pathname === '/';
 
   const updateActive = useCallback((id) => {
     if (activeSectionRef.current !== id) {
@@ -21,8 +23,10 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
   }, []);
 
   useEffect(() => {
-    const sections = NAV_LINKS.map((l) =>
-      document.querySelector(l.href)
+    if (!isHome) return;
+
+    const sections = SECTION_IDS.map((id) =>
+      document.getElementById(id)
     ).filter(Boolean);
 
     const observer = new IntersectionObserver(
@@ -38,30 +42,39 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
 
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, [updateActive]);
+  }, [isHome, updateActive]);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen((open) => !open);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const isActive = (href) => {
+    if (href.startsWith('/#')) {
+      return isHome && activeSection === href.slice(2);
+    }
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   return (
-    <nav className={`nav ${isMenuOpen ? 'menu-open' : ''}`}>
+    <nav className="nav">
       <div className="nav-inner">
-        <a href="#about" className="nav-logo" onClick={closeMenu}>
+        <Link href="/" className="nav-logo" onClick={closeMenu}>
           JMB
-        </a>
+        </Link>
 
         {/* Desktop Links */}
         <ul className="nav-links">
-          {NAV_LINKS.map(({ label, href }) => (
+          {navLinks.map(({ label, href }) => (
             <li key={label}>
-              <a
-                href={href}
-                className={activeSection === href.slice(1) ? 'active' : ''}
-              >
+              <Link href={href} className={isActive(href) ? 'active' : ''}>
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
+          <li>
+            <Link href="/#contact" className="nav-cta">
+              Get in touch
+            </Link>
+          </li>
         </ul>
 
         {/* Mobile Toggle */}
@@ -86,24 +99,27 @@ const NavBar = ({ isMenuOpen, setIsMenuOpen }) => {
           </svg>
         </button>
         <ul>
-          {NAV_LINKS.map(({ label, href }, i) => (
+          {navLinks.map(({ label, href }, i) => (
             <li key={label} style={{ transitionDelay: `${(i + 1) * 0.08}s` }}>
-              <a
+              <Link
                 href={href}
-                className={activeSection === href.slice(1) ? 'active' : ''}
+                className={isActive(href) ? 'active' : ''}
                 onClick={closeMenu}
               >
                 {label}
-              </a>
+              </Link>
             </li>
           ))}
+          <li style={{ transitionDelay: `${(navLinks.length + 1) * 0.08}s` }}>
+            <Link href="/#contact" className="nav-cta" onClick={closeMenu}>
+              Get in touch
+            </Link>
+          </li>
         </ul>
       </div>
 
       {/* Overlay */}
-      {isMenuOpen && (
-        <div className="nav-overlay" onClick={closeMenu} />
-      )}
+      {isMenuOpen && <div className="nav-overlay" onClick={closeMenu} />}
     </nav>
   );
 };

@@ -1,0 +1,54 @@
+import Link from 'next/link';
+import { getAllPosts, formatDate } from '@/lib/posts';
+
+export const metadata = {
+  title: 'Blog',
+  description:
+    'Writing on data products, ownership, and building things that scale.',
+  alternates: { canonical: '/blog' },
+};
+
+export default function BlogIndexPage() {
+  const posts = getAllPosts();
+
+  return (
+    <main className="section blog-index">
+      <header className="blog-index-header">
+        <p className="blog-kicker">janio@blog:~$ ls -t posts/</p>
+        <h1>Writing</h1>
+        <p className="blog-index-intro">
+          Notes on data products, ownership, and building things that scale.
+        </p>
+      </header>
+
+      {posts.length === 0 ? (
+        <p className="blog-empty">No posts yet — check back soon.</p>
+      ) : (
+        <ul className="blog-list">
+          {posts.map((post) => (
+            <li key={post.slug}>
+              <Link href={`/blog/${post.slug}`} className="post-card">
+                <div className="post-card-meta">
+                  <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  <span aria-hidden>·</span>
+                  <span>{post.readingTime}</span>
+                </div>
+                <h2 className="post-card-title">{post.title}</h2>
+                <p className="post-card-description">{post.description}</p>
+                {post.tags.length > 0 && (
+                  <div className="post-card-tags">
+                    {post.tags.map((tag) => (
+                      <span key={tag} className="post-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </main>
+  );
+}

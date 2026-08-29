@@ -4,8 +4,10 @@ import { motion } from 'motion/react';
 const SectionHeading = ({ children, subtitle }) => (
   <div style={{ textAlign: 'center', marginBottom: 'var(--space-3xl)' }}>
     <motion.h2
-      className="gradient-text"
-      style={{ marginBottom: subtitle ? 'var(--space-sm)' : 0 }}
+      style={{
+        color: 'var(--color-white)',
+        marginBottom: subtitle ? 'var(--space-sm)' : 0,
+      }}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-100px' }}

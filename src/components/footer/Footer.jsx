@@ -1,13 +1,21 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
+import { site } from '@/data/site';
 import './footer.css';
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <span className="footer-brand gradient-text">JMB</span>
+        <span className="footer-brand">{site.shortName}</span>
+        <nav className="footer-links" aria-label="Footer">
+          <Link href="/blog">Blog</Link>
+          <a href="/rss.xml">RSS</a>
+        </nav>
         <span className="footer-copy">
-          Built with React &middot; {new Date().getFullYear()}
+          &copy; {new Date().getFullYear()} {site.name}
         </span>
       </div>
     </footer>

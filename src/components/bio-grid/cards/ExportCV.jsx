@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FileDown } from 'lucide-react';
-import CV from '../../../assets/CV.pdf';
+
+const CV = '/CV.pdf';
 
 const ExportCV = () => {
   const [hovering, setHovering] = useState(false);
@@ -37,7 +38,7 @@ const ExportCV = () => {
           alignItems: 'center',
           gap: 'var(--space-sm)',
           padding: 'var(--space-sm) var(--space-lg)',
-          border: '2px solid var(--color-border-accent)',
+          border: '1px solid var(--color-navy-600)',
           borderRadius: 'var(--radius-md)',
           background: hovering ? 'var(--color-accent)' : 'transparent',
           color: hovering ? 'white' : 'var(--color-text-primary)',

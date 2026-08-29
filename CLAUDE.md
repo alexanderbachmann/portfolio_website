@@ -35,6 +35,14 @@ Personal portfolio and blog for Janio Martinez Bachmann. Deployed on Vercel (Hob
 - Env vars: `DATABASE_URL` and `BLOB_READ_WRITE_TOKEN` are injected by Vercel (possibly under a custom prefix such as `neonjaniodb_DATABASE_URL`; `src/lib/env.js` resolves both); `AUTH_SECRET` and `ADMIN_PASSWORD` are set manually in Vercel. Vercel marks these Sensitive, so `vercel env pull` cannot fetch their values: for local work, paste them into `.env.local` by hand (names in `.env.example`).
 - `npm run build` runs the migration and the legacy-post seed before `next build`, so every Vercel deployment sets up the database itself. Both scripts are idempotent.
 
+## Git workflow (standing instruction from Janio)
+
+- After finishing a requested change, commit and push it **without asking**. Janio does not want to be prompted for commits or pushes.
+- Before pushing: `npm run lint` and `npm run build` must pass, and `git status` must show no secret files (`.env.local`, `.vercel/`).
+- Commit on the current feature branch (currently `next-migration`) with a descriptive message. If the branch has no open pull request against `main`, open one with `gh pr create`.
+- Merging into `main` deploys to production. Merge only when Janio asks; say in the recap that the PR is ready to merge.
+- Vercel builds every push (preview deployments sit behind Vercel's login; production is the public site).
+
 ## Hygiene
 
 - Do not commit `.next/`, `.vercel/`, or any `.env*` file except `.env.example`.

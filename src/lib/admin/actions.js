@@ -1,10 +1,14 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import {
+  clearLoginFailures,
   createSession,
   destroySession,
+  loginLockRemainingMs,
+  recordLoginFailure,
   requireOwner,
   verifyPassword,
 } from '@/lib/auth';
@@ -21,11 +25,45 @@ import { slugify } from '@/lib/slugify';
 
 /* ---------------- auth ---------------- */
 
-export async function login(prevState, formData) {
-  const ok = await verifyPassword(formData.get('password'));
-  if (!ok) return { error: 'Wrong password.' };
+/* Vercel sets x-forwarded-for; the fallback only groups unknown clients. */
+async function clientKey() {
+  const headerList = await headers();
+  const forwarded = headerList.get('x-forwarded-for');
+  return (
+    forwarded?.split(',')[0]?.trim() ||
+    headerList.get('x-real-ip') ||
+    'unknown'
+  );
+}
 
-  await createSession();
+export async function login(prevState, formData) {
+  const key = await clientKey();
+
+  const lockedFor = loginLockRemainingMs(key);
+  if (lockedFor > 0) {
+    const minutes = Math.max(1, Math.ceil(lockedFor / 60000));
+    const unit = minutes === 1 ? 'minute' : 'minutes';
+    return { error: `Too many attempts. Try again in ${minutes} ${unit}.` };
+  }
+
+  const ok = await verifyPassword(formData.get('password'));
+  if (!ok) {
+    recordLoginFailure(key);
+    return { error: 'Wrong password.' };
+  }
+
+  clearLoginFailures(key);
+
+  try {
+    await createSession();
+  } catch (err) {
+    /* Almost always a missing or too short AUTH_SECRET on the server.
+       Without this the page would throw with nothing on screen. */
+    console.error('createSession failed', err);
+    return {
+      error: 'Sign in is misconfigured on the server. Check AUTH_SECRET.',
+    };
+  }
 
   const next = String(formData.get('next') ?? '/admin');
   const safeNext =

@@ -34,6 +34,10 @@
   color: var(--color-white);
 }
 
+/* .footer-owner-link is a naming hook only, with no rule of its own: it is
+   the owner's only way in, so it keeps the same contrast as the other
+   footer links rather than being dimmed. */
+
 .footer-copy {
   font-size: var(--text-sm);
   color: var(--color-faint);

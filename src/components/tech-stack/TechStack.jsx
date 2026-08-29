@@ -3,13 +3,15 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import {
-  BarChart3, Database, Code2, Cloud, Target, Lightbulb, Users,
+  BarChart3, Bot, Database, Code2, Cloud, Globe, Target, Lightbulb, Users,
 } from 'lucide-react';
 import SectionHeading from '../shared/SectionHeading';
 import { skillCategories } from '@/data/skills';
 import './tech-stack.css';
 
-const ICONS = { BarChart3, Database, Code2, Cloud, Target, Lightbulb, Users };
+const ICONS = {
+  BarChart3, Bot, Database, Code2, Cloud, Globe, Target, Lightbulb, Users,
+};
 
 const TechStack = () => {
   return (

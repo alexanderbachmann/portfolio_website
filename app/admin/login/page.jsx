@@ -11,7 +11,7 @@ export default async function LoginPage({ searchParams }) {
   return (
     <main className="admin-login">
       <div className="admin-login-card">
-        <p className="admin-kicker">janio@admin:~$ sudo login</p>
+        <p className="admin-kicker">Private area</p>
         <h1>Owner sign in</h1>
         <LoginForm next={next} />
       </div>

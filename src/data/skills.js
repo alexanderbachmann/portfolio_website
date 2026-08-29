@@ -19,12 +19,24 @@ export const skillCategories = [
     ],
   },
   {
+    title: 'LLMs & Agents',
+    icon: 'Bot',
+    tools: [
+      { name: 'Agent Orchestration', detail: 'Multi-step workflows' },
+      { name: 'Managing Agents', detail: 'Roles, tools, limits' },
+      { name: 'Prompt Engineering', detail: 'Context & structure' },
+      { name: 'Evaluation & Guardrails', detail: 'Accuracy you can trust' },
+    ],
+  },
+  {
     title: 'Visualization',
     icon: 'BarChart3',
     tools: [
       { name: 'Tableau', detail: 'Daily driver' },
       { name: 'Looker', detail: 'Google era' },
       { name: 'PowerBI', detail: 'Enterprise' },
+      { name: 'Streamlit', detail: 'Python data apps' },
+      { name: 'Shiny', detail: 'R data apps' },
     ],
   },
   {
@@ -34,6 +46,16 @@ export const skillCategories = [
       { name: 'SQL', detail: '6+ years' },
       { name: 'Python', detail: 'Automation & ML' },
       { name: 'R', detail: 'Statistical analysis' },
+    ],
+  },
+  {
+    title: 'Web',
+    icon: 'Globe',
+    tools: [
+      { name: 'JavaScript', detail: 'App logic' },
+      { name: 'React', detail: 'This site' },
+      { name: 'HTML', detail: 'Semantic markup' },
+      { name: 'CSS', detail: 'Design tokens' },
     ],
   },
   {
@@ -57,7 +79,7 @@ export const skillCategories = [
     icon: 'Cloud',
     tools: [
       { name: 'Google Cloud', detail: 'BigQuery, GCS' },
-      { name: 'React', detail: 'This site' },
+      { name: 'Veeva Vault', detail: 'Regulated content' },
       { name: 'Git', detail: 'Version control' },
     ],
   },

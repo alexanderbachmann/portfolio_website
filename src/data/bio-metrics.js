@@ -29,7 +29,7 @@ export const catStats = {
     { label: 'Judging Hours / Day', value: 5, max: 24 },
   ],
   countriesLived: 3,
-  mood: 'Regal',
+  mood: 'Pampered',
 };
 
 export const currentBook = {

@@ -27,12 +27,66 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
  * a fixed delay to keep online guessing slow.
  */
 export async function verifyPassword(candidate) {
-  const expected = process.env.ADMIN_PASSWORD ?? '';
-  const a = createHash('sha256').update(String(candidate ?? '')).digest();
+  /* Trimmed on both sides: a password pasted into the Vercel dashboard or
+     typed into the form often carries a trailing newline or space, which
+     would otherwise present as a permanent, undiagnosable wrong password. */
+  const expected = (process.env.ADMIN_PASSWORD ?? '').trim();
+  const a = createHash('sha256').update(String(candidate ?? '').trim()).digest();
   const b = createHash('sha256').update(expected).digest();
   const ok = expected.length > 0 && timingSafeEqual(a, b);
   if (!ok) await sleep(400);
   return ok;
+}
+
+/* Best effort brake on password guessing, now that the footer links to the
+   sign in page. Serverless instances are short lived and not shared, so
+   this is a speed bump; the real defences are the password itself and the
+   fixed delay above. */
+const LOCKOUT_WINDOW_MS = 15 * 60 * 1000;
+const MAX_FAILURES = 8;
+const MAX_TRACKED_CLIENTS = 500;
+const failures = new Map();
+
+/* Expired entries first, then oldest first if a burst of distinct clients
+   (a spoofed x-forwarded-for, say) is arriving faster than the window
+   retires them. Map preserves insertion order, so the first keys are the
+   oldest. Without the second pass the map would grow without bound and
+   every attempt would pay a full scan. */
+function pruneFailures(now) {
+  for (const [key, entry] of failures) {
+    if (now - entry.first > LOCKOUT_WINDOW_MS) failures.delete(key);
+  }
+  for (const key of failures.keys()) {
+    if (failures.size <= MAX_TRACKED_CLIENTS) break;
+    failures.delete(key);
+  }
+}
+
+/** Milliseconds left on the lockout for this client, or 0 if not locked. */
+export function loginLockRemainingMs(key) {
+  const entry = failures.get(key);
+  if (!entry) return 0;
+  const elapsed = Date.now() - entry.first;
+  if (elapsed > LOCKOUT_WINDOW_MS) {
+    failures.delete(key);
+    return 0;
+  }
+  return entry.count >= MAX_FAILURES ? LOCKOUT_WINDOW_MS - elapsed : 0;
+}
+
+export function recordLoginFailure(key) {
+  const now = Date.now();
+  if (failures.size > MAX_TRACKED_CLIENTS) pruneFailures(now);
+  const entry = failures.get(key);
+  if (!entry || now - entry.first > LOCKOUT_WINDOW_MS) {
+    failures.set(key, { count: 1, first: now });
+    return;
+  }
+  entry.count += 1;
+}
+
+export function clearLoginFailures(key) {
+  failures.delete(key);
 }
 
 const cookieBase = {

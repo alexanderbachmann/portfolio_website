@@ -302,11 +302,8 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
   padding-top: calc(var(--nav-height) + var(--space-3xl));
 }
 
-.blog-kicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  color: var(--color-muted);
-  margin-bottom: var(--space-md);
+.blog-index-header {
+  margin-bottom: var(--space-3xl);
 }
 
 .blog-index-header h1 {
@@ -315,7 +312,29 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
 
 .blog-index-intro {
   color: var(--color-off-white);
-  margin-bottom: var(--space-3xl);
+}
+
+/* Owner-only shortcuts, rendered client side from the hint cookie. */
+.blog-owner-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.blog-owner-bar a {
+  color: var(--color-off-white);
+  font-weight: 500;
+}
+
+.blog-owner-bar a:hover {
+  color: var(--color-accent);
 }
 
 .blog-empty {

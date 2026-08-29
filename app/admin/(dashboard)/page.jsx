@@ -9,7 +9,7 @@ export default async function AdminPostsPage() {
     <main className="admin-page">
       <div className="admin-page-header">
         <div>
-          <p className="admin-kicker">janio@admin:~$ ls -la posts/</p>
+          <p className="admin-kicker">Your writing</p>
           <h1>Posts</h1>
         </div>
         <Link href="/admin/posts/new" className="admin-btn admin-btn--primary">

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getAllPosts, formatDate } from '@/lib/posts';
+import BlogOwnerBar from '@/components/blog/BlogOwnerBar';
 
 export const metadata = {
   title: 'Blog',
@@ -17,11 +18,11 @@ export default async function BlogIndexPage() {
   return (
     <main className="section blog-index">
       <header className="blog-index-header">
-        <p className="blog-kicker">janio@blog:~$ ls -t posts/</p>
         <h1>Writing</h1>
         <p className="blog-index-intro">
           Notes on data products, ownership, and building things that scale.
         </p>
+        <BlogOwnerBar />
       </header>
 
       {posts.length === 0 ? (

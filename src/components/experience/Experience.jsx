@@ -1,179 +1,105 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown } from 'lucide-react';
-import { experiences } from '../../data/experiences';
-import SectionHeading from '../shared/SectionHeading';
+import React, { useRef } from 'react';
+import Image from 'next/image';
+import { motion, useScroll, useSpring } from 'motion/react';
+import { Calendar, ChevronRight, MapPin } from 'lucide-react';
+import SectionHeading from '@/components/shared/SectionHeading';
+import HighlightedTitle from '@/components/shared/HighlightedTitle';
+import { experiences } from '@/data/experiences';
+import { sections } from '@/data/site';
 import './experience.css';
 
-const Experience = () => {
-  const [expanded, setExpanded] = useState(new Set());
+const isCurrent = (exp) => /present/i.test(exp.period);
 
-  const toggle = (index) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      next.has(index) ? next.delete(index) : next.add(index);
-      return next;
-    });
-  };
+const Experience = () => {
+  const railRef = useRef(null);
+  /* 0 when the top of the list crosses 70% of the viewport, 1 when its
+     bottom does: the rail fills just ahead of the reader. Reduced motion
+     is handled in CSS (a full rail), so the render never branches on the
+     client-only media query and hydration stays clean. */
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ['start 70%', 'end 70%'],
+  });
+  const fill = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  const copy = sections.experience;
 
   return (
     <div className="experience-container">
-      <SectionHeading subtitle="Where I've built, analyzed, and delivered">
-        Experience
+      <SectionHeading
+        index={copy.index}
+        eyebrow={copy.eyebrow}
+        description={copy.description}
+      >
+        <HighlightedTitle text={copy.title} highlight={copy.highlight} />
       </SectionHeading>
 
-      <div className="exp-terminal">
-        {/* Chrome bar */}
-        <div className="exp-terminal-chrome">
-          <div className="exp-chrome-dots">
-            <span className="exp-dot exp-dot--red" />
-            <span className="exp-dot exp-dot--yellow" />
-            <span className="exp-dot exp-dot--green" />
-          </div>
-          <span className="exp-chrome-title">experience.log</span>
-          <div className="exp-chrome-spacer" />
-        </div>
+      <ol className="timeline" ref={railRef}>
+        <span className="timeline-rail" aria-hidden="true" />
+        <motion.span
+          className="timeline-progress"
+          aria-hidden="true"
+          style={{ scaleY: fill }}
+        />
 
-        {/* Terminal body */}
-        <div className="exp-terminal-body">
-          {/* Initial command */}
-          <motion.div
-            className="exp-cmd"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <span className="exp-prompt">$</span> cat experience.log
-          </motion.div>
+        {experiences.map((exp, index) => {
+          const current = isCurrent(exp);
+          return (
+            <motion.li
+              key={`${exp.company}-${exp.period}`}
+              className={`timeline-item${current ? ' timeline-item--current' : ''}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.45, delay: Math.min(index, 3) * 0.06 }}
+            >
+              <div className="timeline-when">
+                <span className="timeline-period">{exp.period}</span>
+                <span className="timeline-location">{exp.location}</span>
+              </div>
 
-          {/* Experience entries */}
-          {experiences.map((exp, index) => {
-            const isExpanded = expanded.has(index);
-            const isFirst = index === 0;
+              <span className="timeline-node" aria-hidden="true">
+                <Image src={exp.logo} alt="" width={40} height={40} />
+              </span>
 
-            return (
-              <motion.div
-                className="exp-entry"
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.35, delay: index * 0.1 }}
-              >
-                {/* Header: logo + [period] Company/Role */}
-                <div className="exp-entry-header">
-                  {exp.logo && (
-                    <img
-                      src={exp.logo.src}
-                      alt={`${exp.company} logo`}
-                      className="exp-entry-logo"
-                    />
-                  )}
-                  <span className="exp-entry-period">[{exp.period}]</span>
-                  <span className="exp-entry-path">
-                    {exp.company.replace(/\s+/g, '')}
-                    <span className="exp-entry-slash">/</span>
-                    <span className="exp-entry-role">
-                      {exp.role.replace(/\s+/g, '')}
-                    </span>
-                  </span>
-                </div>
+              <article className="card timeline-card" data-spotlight>
+                <header className="timeline-card-header">
+                  <div>
+                    <h3 className="timeline-role">{exp.role}</h3>
+                    <p className="timeline-company">{exp.company}</p>
+                  </div>
+                  {current && <span className="timeline-badge">Current</span>}
+                </header>
 
-                {/* Meta lines */}
-                <div className="exp-entry-meta">
-                  <motion.div
-                    className="exp-meta-line"
-                    initial={{ opacity: 0, x: -6 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.25, delay: index * 0.1 + 0.06 }}
-                  >
-                    <span className="exp-meta-key">&gt; location:</span>{' '}
+                <p className="timeline-meta">
+                  <span>
+                    <MapPin size={14} aria-hidden="true" />
                     {exp.location}
-                  </motion.div>
-                  <motion.div
-                    className="exp-meta-line"
-                    initial={{ opacity: 0, x: -6 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.25, delay: index * 0.1 + 0.12 }}
-                  >
-                    <span className="exp-meta-key">&gt; status:</span>{' '}
-                    {isFirst ? (
-                      <span className="exp-status exp-status--active">
-                        ACTIVE
-                      </span>
-                    ) : (
-                      <span className="exp-status exp-status--done">
-                        COMPLETED
-                      </span>
-                    )}
-                  </motion.div>
-                </div>
+                  </span>
+                  <span>
+                    <Calendar size={14} aria-hidden="true" />
+                    {exp.period}
+                  </span>
+                </p>
 
-                {/* Separator */}
-                <div className="exp-separator">───</div>
-
-                {/* First bullet always visible */}
-                <motion.div
-                  className="exp-output-line"
-                  initial={{ opacity: 0, x: -6 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.25, delay: index * 0.1 + 0.18 }}
-                >
-                  <span className="exp-meta-key">&gt;</span>{' '}
-                  {exp.description[0]}
-                </motion.div>
-
-                {/* Expandable bullets */}
-                <AnimatePresence initial={false}>
-                  {isExpanded &&
-                    exp.description.slice(1).map((item, i) => (
-                      <motion.div
-                        className="exp-output-line"
-                        key={i}
-                        initial={{ opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -8 }}
-                        transition={{ duration: 0.2, delay: i * 0.06 }}
-                      >
-                        <span className="exp-meta-key">&gt;</span> {item}
-                      </motion.div>
-                    ))}
-                </AnimatePresence>
-
-                {/* Toggle styled as command */}
-                {exp.description.length > 1 && (
-                  <button
-                    className="exp-cmd-toggle"
-                    onClick={() => toggle(index)}
-                    aria-expanded={isExpanded}
-                  >
-                    <span className="exp-prompt">$</span>{' '}
-                    {isExpanded ? 'clear' : 'cat details.log'}
-                    <ChevronDown
-                      size={12}
-                      style={{
-                        transform: isExpanded
-                          ? 'rotate(180deg)'
-                          : 'rotate(0)',
-                        transition: 'transform 0.25s ease',
-                      }}
-                    />
-                  </button>
-                )}
-              </motion.div>
-            );
-          })}
-
-          {/* Blinking cursor */}
-          <div className="exp-cursor" />
-        </div>
-      </div>
+                <ul className="timeline-bullets">
+                  {exp.description.map((item) => (
+                    <li key={item}>
+                      <ChevronRight size={14} aria-hidden="true" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            </motion.li>
+          );
+        })}
+      </ol>
     </div>
   );
 };

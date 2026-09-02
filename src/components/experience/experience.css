@@ -1,282 +1,231 @@
 /* ========================================
-   EXPERIENCE SECTION — Command Terminal
+   EXPERIENCE: vertical timeline
    ======================================== */
 .experience-container {
-  padding: var(--space-4xl) var(--space-xl);
+  padding: var(--section-pad) var(--space-xl);
   max-width: var(--max-width);
   margin: 0 auto;
 }
 
-/* --- Terminal window --- */
-.exp-terminal {
-  max-width: 820px;
-  margin: 0 auto;
-  border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-navy-600);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  background: var(--color-bg-deep);
-  box-shadow: var(--shadow-lg);
-}
+/* Geometry: node size, the period column (>= 900px), the gap between
+   them, and the x position of the rail, which runs through the node
+   centres. */
+.timeline {
+  --tl-node: 40px;
+  --tl-col: 180px;
+  --tl-gap: var(--space-xl);
+  --tl-x: calc(var(--tl-node) / 2);
 
-/* --- Chrome bar --- */
-.exp-terminal-chrome {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  padding: 12px 16px;
-  background: var(--color-bg-surface);
-  border-bottom: 1px solid var(--color-border);
-}
-
-.exp-chrome-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.exp-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.exp-dot--red {
-  background: hsl(0, 70%, 55%);
-}
-
-.exp-dot--yellow {
-  background: hsl(45, 80%, 60%);
-}
-
-.exp-dot--green {
-  background: hsl(140, 60%, 50%);
-}
-
-.exp-chrome-title {
-  flex: 1;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: var(--color-text-muted);
-  letter-spacing: 0.04em;
-}
-
-.exp-chrome-spacer {
-  width: 54px; /* balances the dots on the left */
-}
-
-/* --- Terminal body --- */
-.exp-terminal-body {
   position: relative;
-  padding: var(--space-xl);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  line-height: 1.8;
-  color: var(--color-text-secondary);
-}
-
-/* CRT scan-line overlay */
-.exp-terminal-body::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    hsla(0, 0%, 0%, 0.03) 2px,
-    hsla(0, 0%, 0%, 0.03) 4px
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* --- Initial command line --- */
-.exp-cmd {
-  margin-bottom: var(--space-xl);
-  color: var(--color-text-primary);
-  font-weight: 500;
-}
-
-.exp-prompt {
-  color: var(--color-chart-2);
-  font-weight: 700;
-}
-
-/* --- Experience entry --- */
-.exp-entry {
-  margin-bottom: var(--space-xl);
-  padding-bottom: var(--space-lg);
-  border-bottom: 1px dashed var(--color-border);
-}
-
-.exp-entry:last-of-type {
-  border-bottom: none;
-}
-
-/* --- Entry header: logo + [period] Company/Role --- */
-.exp-entry-header {
   display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-xs);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--space-xl);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.exp-entry-logo {
-  width: 28px;
-  height: 28px;
+/* --- Rail and scroll-driven fill --- */
+.timeline-rail,
+.timeline-progress {
+  position: absolute;
+  top: var(--space-md);
+  bottom: var(--space-md);
+  left: var(--tl-x);
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.timeline-rail {
+  background: hsl(220 30% 70% / 0.12);
+}
+
+/* scaleY is driven by useScroll + useSpring in Experience.jsx */
+.timeline-progress {
+  background: linear-gradient(180deg, var(--color-chart-3), var(--color-steel));
+  transform-origin: top;
+}
+
+/* --- Item: node | card (mobile) --- */
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--tl-node) minmax(0, 1fr);
+  column-gap: var(--space-md);
+  align-items: start;
+}
+
+.timeline-when {
+  display: none; /* becomes the left column from 900px */
+}
+
+/* Logo node on the rail: white disc, navy ring punches a hole in the rail */
+.timeline-node {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: var(--tl-node);
+  height: var(--tl-node);
+  margin-top: var(--space-md);
+  padding: 4px;
+  border-radius: 50%;
+  background: hsl(0 0% 100%);
+  box-shadow:
+    0 0 0 3px var(--color-navy-950),
+    0 0 0 4px hsl(220 30% 70% / 0.18);
+  overflow: hidden;
+}
+
+.timeline-node img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border-radius: 50%;
-  background: white;
-  padding: 2px;
-  flex-shrink: 0;
 }
 
-.exp-entry-period {
-  color: var(--color-accent);
-  font-weight: 700;
+/* Current role: teal pulsing halo (never orange) */
+.timeline-item--current .timeline-node {
+  animation: timeline-halo 2.4s ease-out infinite;
 }
 
-.exp-entry-path {
-  color: var(--color-chart-2);
-  font-weight: 500;
+@keyframes timeline-halo {
+  0% {
+    box-shadow: 0 0 0 3px var(--color-navy-950), 0 0 0 4px hsl(160 60% 45% / 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 3px var(--color-navy-950), 0 0 0 12px hsl(160 60% 45% / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 3px var(--color-navy-950), 0 0 0 4px hsl(160 60% 45% / 0);
+  }
 }
 
-.exp-entry-slash {
-  color: var(--color-text-muted);
+/* --- Card --- */
+.card.timeline-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
 }
 
-.exp-entry-role {
-  color: var(--color-text-primary);
+.timeline-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.timeline-role {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
   font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-white);
 }
 
-/* --- Meta lines (location, status) --- */
-.exp-entry-meta {
-  padding-left: 2.5rem;
+.timeline-company {
+  margin-top: 2px;
+  font-size: var(--text-base);
+  color: var(--color-off-white);
 }
 
-.exp-meta-line {
-  color: var(--color-text-secondary);
-}
-
-.exp-meta-key {
-  color: var(--color-text-muted);
-}
-
-/* Status badges */
-.exp-status--active {
-  color: hsl(140, 60%, 50%);
-  font-weight: 700;
-  text-shadow: 0 0 8px hsla(140, 60%, 50%, 0.4);
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.exp-status--done {
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    text-shadow: 0 0 8px hsla(140, 60%, 50%, 0.4);
-  }
-  50% {
-    text-shadow: 0 0 16px hsla(140, 60%, 50%, 0.7);
-  }
-}
-
-/* --- Separator --- */
-.exp-separator {
-  color: var(--color-border);
-  padding-left: 2.5rem;
-  margin: var(--space-xs) 0;
-  opacity: 0.6;
-}
-
-/* --- Output / description lines --- */
-.exp-output-line {
-  padding-left: 2.5rem;
-  color: var(--color-text-secondary);
-  font-size: var(--text-sm);
-  line-height: 1.7;
-}
-
-/* --- Command toggle (expand/collapse) --- */
-.exp-cmd-toggle {
+.timeline-badge {
+  flex-shrink: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  margin-top: var(--space-sm);
-  margin-left: 2.5rem;
-  padding: 2px 0;
-  background: transparent;
-  border: none;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: hsl(160 60% 45% / 0.12);
+  border: 1px solid hsl(160 60% 45% / 0.3);
+  color: hsl(160 60% 62%);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  font-weight: 600;
-  color: var(--color-chart-2);
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: color var(--duration) var(--ease-out);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.exp-cmd-toggle:hover {
-  color: var(--color-text-primary);
-  background: transparent;
-  border-color: transparent;
+.timeline-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
 }
 
-/* --- Blinking cursor --- */
-.exp-cursor {
-  display: inline-block;
-  width: 8px;
-  height: 18px;
-  background: var(--color-accent);
-  margin-top: var(--space-md);
-  animation: blink 1s step-end infinite;
+/* Location + period row: mobile only (the left column shows them >= 900px) */
+.timeline-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
+.timeline-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.timeline-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.timeline-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-off-white);
+}
+
+.timeline-bullets svg {
+  flex-shrink: 0;
+  margin-top: 0.3em;
+  color: var(--color-muted);
+}
+
+/* --- Two columns from 900px: when | node | card --- */
+@media (min-width: 900px) {
+  .timeline {
+    --tl-x: calc(var(--tl-col) + var(--tl-gap) + var(--tl-node) / 2);
   }
-}
 
-/* ========================================
-   RESPONSIVE
-   ======================================== */
-@media screen and (max-width: 640px) {
-  .exp-terminal-body {
-    padding: var(--space-md);
+  .timeline-item {
+    grid-template-columns: var(--tl-col) var(--tl-node) minmax(0, 1fr);
+    column-gap: var(--tl-gap);
+  }
+
+  .timeline-when {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
+    padding-top: var(--space-md);
+    text-align: right;
+    font-family: var(--font-mono);
+  }
+
+  .timeline-period {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-off-white);
+  }
+
+  .timeline-location {
     font-size: var(--text-xs);
+    color: var(--color-muted);
   }
 
-  .exp-dot {
-    width: 8px;
-    height: 8px;
-  }
-
-  .exp-entry-logo {
-    width: 22px;
-    height: 22px;
-  }
-
-  .exp-entry-meta,
-  .exp-separator,
-  .exp-output-line,
-  .exp-cmd-toggle {
-    padding-left: 1.5rem;
-    margin-left: 0;
-  }
-
-  .exp-cmd-toggle {
-    margin-left: 1.5rem;
-  }
-
-  .exp-entry-header {
-    font-size: var(--text-xs);
+  .timeline-meta {
+    display: none;
   }
 }
 
@@ -284,12 +233,12 @@
    REDUCED MOTION
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
-  .exp-status--active {
+  .timeline-item--current .timeline-node {
     animation: none;
   }
 
-  .exp-cursor {
-    animation: none;
-    opacity: 1;
+  /* Full rail instead of the scroll-driven fill (beats the inline style) */
+  .timeline-progress {
+    transform: none !important;
   }
 }

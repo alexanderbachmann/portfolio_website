@@ -1,6 +1,6 @@
 /* ── Section ─────────────────────────────────────────── */
 .accomplishments-section {
-  padding: var(--space-4xl) var(--space-xl);
+  padding: var(--section-pad) var(--space-xl);
 }
 
 .accomplishments-wrapper {
@@ -8,56 +8,99 @@
   margin: 0 auto;
 }
 
-/* ── Grid (compact, no featured tier) ────────────────── */
+/* ── Grid ────────────────────────────────────────────── */
+/* Stacked; 2 columns with the featured card full-width from 640px;
+   from 1024px the featured card spans two rows in a wider left column
+   and the other two stack on the right. */
 .accomplishments-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-lg);
-  margin-top: var(--space-2xl);
 }
 
 @media (min-width: 640px) {
   .accomplishments-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .accomplishment-cell--featured {
+    grid-column: 1 / -1;
   }
 }
 
 @media (min-width: 1024px) {
   .accomplishments-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+
+  .accomplishment-cell--featured {
+    grid-column: 1;
+    grid-row: 1 / span 2;
   }
 }
 
+.accomplishment-cell {
+  display: grid;
+  min-width: 0;
+}
+
 /* ── Card ────────────────────────────────────────────── */
-.accomplishment-card {
+.card.accomplishment-card {
   display: flex;
   flex-direction: column;
-  background: var(--color-navy-800);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  transition:
-    border-color var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out);
-}
-
-.accomplishment-card:hover {
-  border-color: var(--color-navy-600);
-  transform: translateY(-2px);
-}
-
-.accomplishment-card-header {
-  display: flex;
-  align-items: center;
   gap: var(--space-sm);
-  margin-bottom: var(--space-md);
+  padding: var(--space-lg);
+  height: 100%;
+}
+
+.accomplishment-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xs);
+}
+
+/* Stat-forward header */
+.accomplishment-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.accomplishment-stat-value {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--color-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.accomplishment-stat-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-muted);
 }
 
 .accomplishment-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-navy-700);
+  border: 1px solid var(--color-glass-border);
   color: var(--color-muted);
 }
 
 .accomplishment-card-title {
+  font-family: var(--font-display);
   font-size: var(--text-base);
   font-weight: 700;
   color: var(--color-white);
@@ -66,15 +109,31 @@
 .accomplishment-card-subtitle {
   font-size: var(--text-sm);
   color: var(--color-off-white);
-  margin-bottom: var(--space-sm);
 }
 
 .accomplishment-card-description {
   font-size: var(--text-sm);
   color: var(--color-muted);
   line-height: var(--leading-normal);
-  margin-bottom: var(--space-md);
   flex: 1;
+}
+
+.accomplishment-recognition {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  background: hsl(0 0% 100% / 0.04);
+  border: 1px solid hsl(0 0% 100% / 0.06);
+  font-size: var(--text-sm);
+  color: var(--color-off-white);
+}
+
+.accomplishment-recognition svg {
+  flex-shrink: 0;
+  margin-top: 0.2em;
+  color: var(--color-muted);
 }
 
 .accomplishment-card-footer {
@@ -83,6 +142,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: var(--space-sm);
+  margin-top: var(--space-sm);
 }
 
 .accomplishment-card-tags {
@@ -91,42 +151,35 @@
   gap: var(--space-xs);
 }
 
-.accomplishment-card-tag {
+.accomplishment-tag {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: var(--text-xs);
   color: var(--color-muted);
-  background: var(--color-navy-700);
-  padding: 0.15rem 0.5rem;
+  background: hsl(0 0% 100% / 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.06);
+  padding: 2px 10px;
   border-radius: var(--radius-full);
 }
 
 /* ── Link (orange on hover only) ─────────────────────── */
-.featured-link {
+.accomplishment-link {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
+  gap: 4px;
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--color-off-white);
-  text-decoration: none;
-  transition: color var(--duration) var(--ease-out);
+  white-space: nowrap;
 }
 
-.featured-link:hover {
+.accomplishment-link:hover {
   color: var(--color-accent);
 }
 
-.featured-link svg {
+.accomplishment-link svg {
   transition: transform var(--duration) var(--ease-out);
 }
 
-.featured-link:hover svg {
-  transform: translateX(3px);
-}
-
-/* ── Reduced Motion ──────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .accomplishment-card {
-    transition: none;
-  }
+.accomplishment-link:hover svg {
+  transform: translate(2px, -2px);
 }

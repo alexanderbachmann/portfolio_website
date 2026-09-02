@@ -3,65 +3,68 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Linkedin } from 'lucide-react';
-import { site } from '@/data/site';
+import { socialIconByLabel } from '@/components/shared/socialIcons';
+import { contact, site, socials } from '@/data/site';
+import { experiences } from '@/data/experiences';
 import './contact.css';
 
-const Contact = () => {
-  return (
-    <section className="contact-section">
-      <div className="contact-wrapper">
-        <motion.p
-          className="contact-kicker"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5 }}
-        >
-          What&rsquo;s next?
-        </motion.p>
+const Contact = () => (
+  <div className="contact-section">
+    <div className="contact-wrapper">
+      <motion.div
+        className="card card--static contact-panel"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.55 }}
+      >
+        <p className="contact-kicker">{contact.kicker}</p>
 
-        <motion.h2
-          className="contact-heading"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: 0.08 }}
-        >
-          Let&rsquo;s build something.
-        </motion.h2>
+        <h2 className="contact-heading">
+          {contact.heading}{' '}
+          <span className="gradient-text">{contact.headingAccent}</span>
+        </h2>
 
-        <motion.p
-          className="contact-description"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: 0.16 }}
-        >
-          Have a question, want to collaborate, or just want to connect?
-          I&rsquo;m always happy to hear from product, data, and analytics
-          leaders. The fastest way to reach me is a message on LinkedIn.
-        </motion.p>
+        <p className="contact-description">{contact.description}</p>
 
-        <motion.div
-          className="contact-links"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5, delay: 0.24 }}
-        >
+        <div className="contact-links">
           <a
             href={site.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="contact-button primary"
+            className="btn btn--primary"
           >
-            <Linkedin size={18} />
-            Message me on LinkedIn
+            <Linkedin size={18} aria-hidden="true" />
+            {contact.cta}
           </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
+        </div>
+
+        <ul className="contact-socials" aria-label="Profiles">
+          {socials.map(({ href, label }) => {
+            const Icon = socialIconByLabel[label];
+            return (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--icon"
+                  title={label}
+                  aria-label={label}
+                >
+                  {Icon && <Icon size={18} aria-hidden="true" />}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+
+        <p className="contact-based">
+          {contact.basedInLabel} {experiences[0].location}
+        </p>
+      </motion.div>
+    </div>
+  </div>
+);
 
 export default Contact;

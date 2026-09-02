@@ -1,3 +1,5 @@
+/* `stat` is the big line at the top of each card: a number counts up
+   ({ value, suffix, label }), a string renders as-is ({ text, label }). */
 export const accomplishments = [
   {
     id: 'kaggle-notebook',
@@ -28,6 +30,7 @@ export const accomplishments = [
     title: 'Kaggle Notebooks Grandmaster',
     description:
       'Achieved the Kaggle Notebooks Grandmaster tier, the highest rank on Kaggle for notebook contributions, awarded to a select group of top contributors worldwide.',
+    stat: { text: 'Grandmaster', label: 'Notebooks tier' },
     tags: ['Kaggle', 'Data Science', 'Community'],
     link: {
       url: 'https://www.kaggle.com/janiobachmann',
@@ -39,6 +42,7 @@ export const accomplishments = [
     title: 'Featured in Kaggle Data Notes',
     description:
       'Selected for the Data Notes newsletter, a curated publication by Kaggle (2018 - 2019) that highlighted the best code, analytics, and data from across the platform.',
+    stat: { text: '2018 - 2019', label: 'Data Notes' },
     tags: ['Kaggle', 'Newsletter', 'Recognition'],
   },
 ];

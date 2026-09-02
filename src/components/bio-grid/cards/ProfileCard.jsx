@@ -1,60 +1,25 @@
-import React, { useRef } from 'react';
-import profilePic from '../../../assets/speaker.jpeg';
+import React from 'react';
+import CartoonJanio from '@/components/hero/CartoonJanio';
+import useTilt from '@/components/shared/useTilt';
+import { site } from '@/data/site';
 
+/* The illustrated avatar lives here now; the hero shows the real photo. */
 const ProfileCard = () => {
-  const cardRef = useRef(null);
-
-  const handleMouseMove = (e) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateY = ((x - centerX) / centerX) * 8;
-    const rotateX = ((centerY - y) / centerY) * 8;
-    el.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-  };
-
-  const handleMouseLeave = () => {
-    const el = cardRef.current;
-    if (el) el.style.transform = 'perspective(600px) rotateX(0) rotateY(0)';
-  };
+  const tilt = useTilt(8, 600);
 
   return (
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        transition: 'transform 0.15s ease-out',
-      }}
+      ref={tilt.ref}
+      onPointerMove={tilt.onPointerMove}
+      onPointerLeave={tilt.onPointerLeave}
+      className="bio-profile"
     >
-      <img
-        src={profilePic.src}
-        alt="Janio Martinez Bachmann"
-        style={{
-          width: '140px',
-          height: '140px',
-          objectFit: 'cover',
-          borderRadius: 'var(--radius-lg)',
-          border: '3px solid var(--color-border-accent)',
-          boxShadow: 'var(--shadow-lg), var(--shadow-glow)',
-        }}
-      />
-      <div style={{ marginTop: 'var(--space-md)', textAlign: 'center' }}>
-        <div style={{ fontWeight: 700, fontSize: 'var(--text-base)', color: 'var(--color-text-primary)' }}>
-          Janio Martinez Bachmann
-        </div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', marginTop: 2, fontFamily: 'var(--font-mono)' }}>
-          id: 1 of 1
-        </div>
+      <div className="bio-profile-figure">
+        <CartoonJanio />
+      </div>
+      <div className="bio-profile-caption">
+        <div className="bio-profile-name">{site.name}</div>
+        <div className="bio-profile-id">id: 1 of 1</div>
       </div>
     </div>
   );

@@ -35,7 +35,8 @@ const BookCard = () => {
           textAlign: 'center',
           gap: 'var(--space-sm)',
         }}>
-          <BookOpen size={32} style={{ color: 'var(--color-accent)', marginBottom: 'var(--space-sm)' }} />
+          {/* Muted at rest: the card's one orange is the books-this-year metric */}
+          <BookOpen size={32} style={{ color: 'var(--color-text-muted)', marginBottom: 'var(--space-sm)' }} />
           <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
             Currently Reading
           </div>

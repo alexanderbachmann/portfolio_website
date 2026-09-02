@@ -1,22 +1,64 @@
+/* ========================================
+   HERO
+   ======================================== */
 .hero {
   min-height: calc(88vh - var(--nav-height));
   display: flex;
-  align-items: center;
-  padding: calc(var(--nav-height) + var(--space-3xl)) var(--space-xl) var(--space-3xl);
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3xl);
+  padding: calc(var(--nav-height) + var(--space-3xl)) var(--space-xl) var(--space-2xl);
 }
 
 .hero-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--space-2xl);
+  gap: var(--space-3xl);
   max-width: var(--max-width);
   margin: 0 auto;
   width: 100%;
 }
 
+/* Wide enough for "Janio Martinez" on one line at the largest name size */
 .hero-inner {
-  max-width: 640px;
+  max-width: 700px;
+}
+
+/* --- Status pill (data switch: hero.status in src/data/site.js) --- */
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.6rem;
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-full);
+  background: hsl(0 0% 100% / 0.04);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.02em;
+  color: var(--color-off-white);
+}
+
+.hero-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-muted);
+  flex-shrink: 0;
+}
+
+/* Teal reads as "online"; never orange here. */
+.hero-status--availability .hero-status-dot {
+  background: var(--color-chart-3);
+  animation: hero-status-pulse 2.2s ease-out infinite;
+}
+
+@keyframes hero-status-pulse {
+  0%   { box-shadow: 0 0 0 0 hsl(160 60% 45% / 0.5); }
+  70%  { box-shadow: 0 0 0 8px hsl(160 60% 45% / 0); }
+  100% { box-shadow: 0 0 0 0 hsl(160 60% 45% / 0); }
 }
 
 /* --- Kicker --- */
@@ -27,22 +69,18 @@
   color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
-/* --- Name --- */
+/* --- Name (the surname is the one gradient word) --- */
 .hero-name {
   font-size: var(--text-hero);
   font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
   color: var(--color-white);
   margin-bottom: var(--space-lg);
-}
-
-/* The one orange highlight in the hero (orange discipline rule #1) */
-.hero-name-accent {
-  color: var(--color-accent);
+  text-wrap: balance;
 }
 
 /* --- Description --- */
@@ -59,75 +97,30 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--space-md);
+  gap: var(--space-sm) var(--space-md);
   margin-bottom: var(--space-2xl);
 }
 
-.hero-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.7em 1.5em;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  font-size: var(--text-base);
-  transition:
-    background-color var(--duration) var(--ease-out),
-    border-color var(--duration) var(--ease-out),
-    color var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out);
+.hero-actions .btn {
+  gap: 0.5rem;
 }
 
-.hero-btn--primary {
-  background: var(--color-accent);
-  color: hsl(0 0% 100%);
+.hero-cta-icon {
+  transition: transform var(--duration) var(--ease-out);
 }
 
-.hero-btn--primary:hover {
-  background: var(--color-accent-hover);
-  color: hsl(0 0% 100%);
-  transform: translateY(-2px);
+.hero-cta:hover .hero-cta-icon {
+  transform: translate(2px, -2px);
 }
 
-.hero-btn--ghost {
-  border: 1px solid var(--color-navy-600);
-  color: var(--color-off-white);
-}
-
-.hero-btn--ghost:hover {
-  border-color: var(--color-muted);
-  color: var(--color-white);
-  transform: translateY(-2px);
-}
-
-/* --- Socials --- */
 .hero-socials {
   display: flex;
-  gap: var(--space-sm);
-  margin-left: var(--space-sm);
+  gap: var(--space-xs);
+  margin-left: var(--space-xs);
 }
 
-.hero-social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: var(--radius-full);
-  color: var(--color-muted);
-  border: 1px solid transparent;
-  transition:
-    color var(--duration) var(--ease-out),
-    border-color var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out);
-}
-
-.hero-social-link:hover {
-  color: var(--color-white);
-  border-color: var(--color-navy-600);
-  transform: translateY(-2px);
-}
-
-/* --- Stat row (single source: src/data/site.js metrics) --- */
+/* --- Stats (single source: src/data/site.js metrics) ---
+   dt comes first in the DOM for screen readers; the value is shown first. */
 .hero-stats {
   display: flex;
   gap: var(--space-xl);
@@ -139,6 +132,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .hero-stat + .hero-stat {
@@ -147,50 +141,232 @@
 }
 
 .hero-stat-value {
-  font-family: var(--font-mono);
-  font-size: var(--text-2xl);
+  order: 1;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.5rem);
   font-weight: 700;
-  color: var(--color-white);
+  letter-spacing: -0.02em;
   line-height: 1.1;
+  color: var(--color-white);
+  font-variant-numeric: tabular-nums;
 }
 
 .hero-stat-label {
+  order: 2;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-off-white);
+}
+
+.hero-stat-desc {
+  order: 3;
+  display: none;
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-muted);
+  max-width: 24ch;
+}
+
+@media (min-width: 640px) {
+  .hero-stat-desc {
+    display: block;
+  }
+}
+
+/* ========================================
+   FIGURE: floating glass profile card
+   ======================================== */
+.hero-figure {
+  justify-self: end;
+  width: clamp(240px, 26vw, 320px);
+}
+
+.hero-float {
+  will-change: transform;
+}
+
+.card.hero-card {
+  padding: 0.6rem;
+  border-radius: var(--radius-2xl);
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+.hero-card-photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: calc(var(--radius-2xl) - 0.6rem);
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  background: var(--color-navy-900);
+}
+
+/* Landscape source in a portrait frame: cover shows the full height, so
+   the crop is a zoom anchored at the right edge, a quarter down (the
+   subject stands in the right third of speaker.jpeg). */
+.hero-card-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 100% 50%;
+  transform: scale(1.6);
+  transform-origin: 100% 25%;
+}
+
+.hero-card-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.9rem 0.6rem 0.5rem;
+}
+
+.hero-card-name {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+}
+
+.hero-card-role {
   font-size: var(--text-sm);
   color: var(--color-muted);
 }
 
-/* ========================================
-   CARTOON CHARACTER (companion column)
-   ======================================== */
-.cartoon-janio-wrapper {
-  /* Illustration palette, keyed to the navy scale */
-  --cj-suit: hsl(222 42% 17%);
-  --cj-suit-dark: hsl(222 46% 13%);
-  --cj-suit-leg: hsl(222 40% 15%);
-  --cj-suit-shadow: hsl(222 45% 11%);
-  --cj-outline: var(--color-navy-950);
-
-  justify-self: center;
-  width: clamp(140px, 16vw, 220px);
-  pointer-events: none;
+.hero-card-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin-top: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-glass-border);
+  background: hsl(0 0% 100% / 0.04);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-off-white);
 }
 
-.cartoon-janio-wrapper svg {
-  display: block;
+/* ========================================
+   EMPLOYER STRIP
+   ======================================== */
+.logo-strip {
   width: 100%;
-  height: auto;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.logo-strip-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  margin-bottom: var(--space-md);
+}
+
+.logo-marquee {
+  --logo-gap: 0.75rem;
+  overflow: hidden;
+}
+
+.logo-marquee-track {
+  display: flex;
+}
+
+/* Static, centred, wrapping row (>= 900px). The duplicate list is hidden. */
+.logo-strip-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--logo-gap);
+}
+
+.logo-strip-list[aria-hidden='true'] {
+  display: none;
+}
+
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.45rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-glass-border);
+  background: hsl(0 0% 100% / 0.04);
+  white-space: nowrap;
+}
+
+.logo-chip-mark {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  padding: 3px;
+  border-radius: 50%;
+  background: hsl(0 0% 100%);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.logo-chip-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo-chip-name {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-off-white);
+}
+
+/* Infinite marquee below 900px. Each list carries the gap as padding so
+   translateX(-50%) lands exactly on the seam. */
+@media (max-width: 899.98px) {
+  .logo-marquee {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .logo-marquee-track {
+    width: max-content;
+    animation: logo-marquee 28s linear infinite;
+  }
+
+  .logo-marquee:hover .logo-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .logo-strip-list,
+  .logo-strip-list[aria-hidden='true'] {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-right: var(--logo-gap);
+  }
+}
+
+@keyframes logo-marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ========================================
    RESPONSIVE
    ======================================== */
-@media screen and (max-width: 900px) {
+@media (max-width: 899.98px) {
   .hero {
     text-align: center;
+    gap: var(--space-2xl);
   }
 
   .hero-layout {
     grid-template-columns: 1fr;
+    gap: var(--space-2xl);
   }
 
   .hero-inner {
@@ -209,14 +385,26 @@
 
   .hero-stat {
     align-items: center;
+    text-align: center;
   }
 
-  .cartoon-janio-wrapper {
-    width: clamp(110px, 22vw, 150px);
+  .hero-figure {
+    justify-self: center;
+    width: 220px;
+  }
+
+  .hero-card-caption {
+    text-align: left;
   }
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
+  /* Keeps "Global Product Owner · Data & BI" on one line at 390px */
+  .hero-kicker {
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+  }
+
   .hero-stats {
     gap: var(--space-lg);
   }
@@ -224,8 +412,32 @@
   .hero-stat + .hero-stat {
     padding-left: var(--space-lg);
   }
+}
 
-  .cartoon-janio-wrapper {
+/* ========================================
+   REDUCED MOTION (the global rule would freeze the marquee at -50%)
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .hero-status--availability .hero-status-dot {
+    animation: none;
+  }
+
+  .logo-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .logo-marquee-track {
+    width: auto;
+    animation: none;
+  }
+
+  .logo-strip-list {
+    flex-wrap: wrap;
+    padding-right: 0;
+  }
+
+  .logo-strip-list[aria-hidden='true'] {
     display: none;
   }
 }

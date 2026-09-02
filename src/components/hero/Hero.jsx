@@ -1,55 +1,17 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Linkedin, Github, BookOpen } from 'lucide-react';
-import CartoonJanio from './CartoonJanio';
-import { metrics, site } from '@/data/site';
+import React from 'react';
+import Image from 'next/image';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowUpRight, FileDown, MapPin } from 'lucide-react';
+import AnimatedNumber from '@/components/shared/AnimatedNumber';
+import { socialIconByLabel } from '@/components/shared/socialIcons';
+import useTilt from '@/components/shared/useTilt';
+import LogoStrip from './LogoStrip';
+import { CV_PATH, hero, metrics, site, socials } from '@/data/site';
+import { experiences } from '@/data/experiences';
+import profilePic from '@/assets/speaker.jpeg';
 import './hero.css';
-
-const socials = [
-  { href: site.linkedin, icon: Linkedin, label: 'LinkedIn' },
-  { href: 'https://github.com/alexanderbachmann', icon: Github, label: 'GitHub' },
-  {
-    href: 'https://www.kaggle.com/janiobachmann',
-    label: 'Kaggle',
-    svg: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-        <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358" />
-      </svg>
-    ),
-  },
-  { href: 'https://www.goodreads.com/user/show/139128464-janio-martinez-bachmann', icon: BookOpen, label: 'GoodReads' },
-];
-
-const AnimatedNumber = ({ target }) => {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
-  const shouldReduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (shouldReduceMotion) {
-      setCount(target);
-      return;
-    }
-    let frame;
-    const duration = 1000;
-    const start = performance.now();
-    const tick = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * target));
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [isInView, target, shouldReduceMotion]);
-
-  return <span ref={ref}>{count}</span>;
-};
 
 const fadeUp = (delay) => ({
   initial: { opacity: 0, y: 24 },
@@ -57,19 +19,41 @@ const fadeUp = (delay) => ({
   transition: { duration: 0.5, delay },
 });
 
+const current = experiences[0];
+const nameParts = site.name.split(' ');
+const surname = nameParts.pop();
+const givenNames = nameParts.join(' ');
+
+const statusText = {
+  availability: hero.availabilityText,
+  location: `${current.location} · ${current.role} at ${current.company}`,
+  none: null,
+}[hero.status];
+
 const Hero = () => {
-  const shouldReduceMotion = useReducedMotion();
+  const reduce = useReducedMotion();
+  const tilt = useTilt(5, 800);
 
   return (
     <div className="hero">
       <div className="hero-layout">
         <div className="hero-inner">
-          <motion.p className="hero-kicker" {...fadeUp(0)}>
+          {statusText && (
+            <motion.p
+              className={`hero-status hero-status--${hero.status}`}
+              {...fadeUp(0)}
+            >
+              <span className="hero-status-dot" aria-hidden="true" />
+              {statusText}
+            </motion.p>
+          )}
+
+          <motion.p className="hero-kicker" {...fadeUp(0.05)}>
             {site.role}
           </motion.p>
 
           <motion.h1 className="hero-name" {...fadeUp(0.1)}>
-            Janio Martinez <span className="hero-name-accent">Bachmann</span>
+            {givenNames} <span className="gradient-text">{surname}</span>
           </motion.h1>
 
           <motion.p className="hero-description" {...fadeUp(0.2)}>
@@ -77,63 +61,103 @@ const Hero = () => {
           </motion.p>
 
           <motion.div className="hero-actions" {...fadeUp(0.3)}>
+            {/* data-hero-cta: the navbar keeps its own CTA ghost while this
+                one is on screen (one orange CTA per viewport). */}
             <a
               href={site.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="hero-btn hero-btn--primary"
+              className="btn btn--primary hero-cta"
+              data-hero-cta
             >
-              Get in touch
+              {hero.primaryCta}
+              <ArrowUpRight size={18} className="hero-cta-icon" aria-hidden="true" />
             </a>
-            <Link href="/blog" className="hero-btn hero-btn--ghost">
-              Read the blog
-            </Link>
-            <div className="hero-socials">
-              {socials.map(({ href, icon: Icon, svg, label }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hero-social-link"
-                  title={label}
-                  aria-label={label}
-                >
-                  {svg || <Icon size={18} />}
-                </a>
-              ))}
-            </div>
+            <a
+              href={CV_PATH}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn--ghost"
+            >
+              <FileDown size={18} aria-hidden="true" />
+              {hero.cvCta}
+            </a>
+            <ul className="hero-socials" aria-label="Profiles">
+              {socials.map(({ href, label }) => {
+                const Icon = socialIconByLabel[label];
+                return (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn--icon"
+                      title={label}
+                      aria-label={label}
+                    >
+                      {Icon && <Icon size={18} aria-hidden="true" />}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </motion.div>
 
           <motion.dl className="hero-stats" {...fadeUp(0.45)}>
             {metrics.map((stat) => (
-              <div key={stat.label} className="hero-stat" title={stat.description}>
+              <div key={stat.label} className="hero-stat">
+                <dt className="hero-stat-label">{stat.label}</dt>
                 <dd className="hero-stat-value">
                   <AnimatedNumber target={stat.value} />
                   {stat.suffix}
                 </dd>
-                <dt className="hero-stat-label">{stat.label}</dt>
+                <dd className="hero-stat-desc">{stat.description}</dd>
               </div>
             ))}
           </motion.dl>
         </div>
 
+        {/* Entrance (outer) and idle float (inner) are separate motion
+            elements so the loop never replays the entrance offset. */}
         <motion.div
-          className="cartoon-janio-wrapper"
+          className="hero-figure"
           initial={{ opacity: 0, y: 20 }}
-          animate={
-            shouldReduceMotion
-              ? { opacity: 1, y: 0 }
-              : { opacity: 1, y: [0, -8, 0] }
-          }
-          transition={{
-            opacity: { duration: 0.6, delay: 0.5 },
-            y: { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 },
-          }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <CartoonJanio />
+          <motion.div
+            className="hero-float"
+            animate={reduce ? undefined : { y: [0, -6, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <div
+              ref={tilt.ref}
+              onPointerMove={tilt.onPointerMove}
+              onPointerLeave={tilt.onPointerLeave}
+              className="card card--static hero-card"
+            >
+              <div className="hero-card-photo">
+                <Image
+                  src={profilePic}
+                  alt={`${site.name} presenting on stage`}
+                  priority
+                  sizes="(max-width: 900px) 360px, 520px"
+                />
+              </div>
+              <div className="hero-card-caption">
+                <p className="hero-card-name">{site.name}</p>
+                <p className="hero-card-role">{site.role}</p>
+                <p className="hero-card-chip">
+                  <MapPin size={12} aria-hidden="true" />
+                  {current.location}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
+
+      <LogoStrip />
     </div>
   );
 };

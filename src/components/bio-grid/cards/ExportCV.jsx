@@ -1,56 +1,35 @@
 import React, { useState } from 'react';
 import { FileDown } from 'lucide-react';
-
-const CV = '/CV.pdf';
+import { CV_PATH, hero } from '@/data/site';
 
 const ExportCV = () => {
   const [hovering, setHovering] = useState(false);
+  const on = () => setHovering(true);
+  const off = () => setHovering(false);
 
   return (
-    <div style={{
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      gap: 'var(--space-md)',
-    }}>
-      <FileDown size={28} style={{ color: 'var(--color-accent)' }} />
+    <div className="bio-cv">
+      <FileDown size={28} className="bio-cv-icon" aria-hidden="true" />
 
       <div>
-        <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600, marginBottom: 4 }}>
-          Data Export
-        </div>
-        <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>
+        <div className="bio-cv-kicker">Data Export</div>
+        <div className="bio-cv-status" aria-live="polite">
           {hovering ? 'Preparing export...' : 'Profile Summary (.pdf)'}
         </div>
       </div>
 
       <a
-        href={CV}
+        href={CV_PATH}
         target="_blank"
         rel="noopener noreferrer"
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 'var(--space-sm)',
-          padding: 'var(--space-sm) var(--space-lg)',
-          border: '1px solid var(--color-navy-600)',
-          borderRadius: 'var(--radius-md)',
-          background: hovering ? 'var(--color-accent)' : 'transparent',
-          color: hovering ? 'white' : 'var(--color-text-primary)',
-          textDecoration: 'none',
-          fontSize: 'var(--text-sm)',
-          fontWeight: 600,
-          transition: 'all var(--duration) var(--ease-out)',
-          boxShadow: hovering ? 'var(--shadow-glow)' : 'none',
-        }}
+        className="btn btn--ghost btn--sm"
+        onMouseEnter={on}
+        onMouseLeave={off}
+        onFocus={on}
+        onBlur={off}
       >
-        <FileDown size={16} />
-        Download CV
+        <FileDown size={16} aria-hidden="true" />
+        {hero.cvCta}
       </a>
     </div>
   );

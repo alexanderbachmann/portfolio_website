@@ -3,14 +3,17 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from 'motion/react';
+import SectionHeading from '@/components/shared/SectionHeading';
+import HighlightedTitle from '@/components/shared/HighlightedTitle';
 import SqlQuery from './cards/SqlQuery';
 import ProfileCard from './cards/ProfileCard';
 import CatDashboard from './cards/CatDashboard';
 import BookCard from './cards/BookCard';
 import ExportCV from './cards/ExportCV';
+import { sections } from '@/data/site';
 import './bio-grid.css';
 
-/* d3/topojson geometry + react-tooltip are DOM-dependent — client-only */
+/* d3/topojson geometry + react-tooltip are DOM-dependent: client-only */
 const CountriesMap = dynamic(() => import('./cards/CountriesMap'), {
   ssr: false,
 });
@@ -24,47 +27,54 @@ const cardVariants = {
   }),
 };
 
+/* `key` doubles as the grid-area name (see bio-grid.css). */
 const cards = [
-  { key: 'map', area: 'map', Component: CountriesMap },
-  { key: 'sql', area: 'sql', Component: SqlQuery },
-  { key: 'profile', area: 'profile', Component: ProfileCard },
-  { key: 'cat', area: 'cat', Component: CatDashboard },
-  { key: 'book', area: 'book', Component: BookCard },
-  { key: 'cv', area: 'cv', Component: ExportCV },
+  { key: 'map', Component: CountriesMap },
+  { key: 'sql', Component: SqlQuery },
+  { key: 'profile', Component: ProfileCard },
+  { key: 'cat', Component: CatDashboard },
+  { key: 'book', Component: BookCard },
+  { key: 'cv', Component: ExportCV },
 ];
 
 const BioGrid = () => {
+  const copy = sections.about;
+
   return (
-    <section className="bio-grid-section dot-pattern-bg">
+    <div className="bio-grid-section">
       <div className="bio-grid-wrapper">
-        <motion.p
-          className="bio-grid-intro"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.5 }}
+        <SectionHeading
+          index={copy.index}
+          eyebrow={copy.eyebrow}
+          description={copy.description}
         >
-          A few things about how I work and who I am:
-        </motion.p>
+          <HighlightedTitle text={copy.title} highlight={copy.highlight} />
+        </SectionHeading>
 
         <div className="bio-grid">
-          {cards.map(({ key, area, Component }, i) => (
+          {cards.map(({ key, Component }, i) => (
+            /* The reveal wrapper keeps motion's inline transform off the
+               glass card, so the card's own hover lift still works. */
             <motion.div
               key={key}
-              className="bio-card"
-              style={{ gridArea: area }}
+              className="bio-cell"
+              style={{ gridArea: key }}
               custom={i}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-60px' }}
               variants={cardVariants}
             >
-              <Component />
+              <div className={`card bio-card bio-card--${key}`} data-spotlight>
+                <div className="bio-card-body">
+                  <Component />
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

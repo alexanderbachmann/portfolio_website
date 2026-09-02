@@ -70,15 +70,17 @@ const CatDashboard = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-md)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <Cat size={16} style={{ color: 'var(--color-accent)' }} />
+          <Cat size={16} style={{ color: 'var(--color-text-muted)' }} />
           <span style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
             Cat Analytics
           </span>
         </div>
+        {/* Neutral badge: the card's one orange is the mood metric below */}
         <span style={{
           fontSize: 'var(--text-xs)',
-          color: 'var(--color-bg-deep)',
-          background: 'var(--color-accent)',
+          color: 'var(--color-text-secondary)',
+          background: 'hsl(0 0% 100% / 0.06)',
+          border: '1px solid hsl(0 0% 100% / 0.1)',
           padding: '1px 8px',
           borderRadius: 'var(--radius-full)',
           fontWeight: 600,

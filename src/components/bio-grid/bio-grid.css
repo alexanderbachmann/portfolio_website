@@ -1,5 +1,5 @@
 .bio-grid-section {
-  padding: var(--space-3xl) var(--space-xl);
+  padding: var(--space-2xl) var(--space-xl) var(--section-pad);
 }
 
 .bio-grid-wrapper {
@@ -7,15 +7,7 @@
   margin: 0 auto;
 }
 
-.bio-grid-intro {
-  text-align: center;
-  color: var(--color-text-muted);
-  font-size: var(--text-lg);
-  margin-bottom: var(--space-2xl);
-  font-style: italic;
-}
-
-/* 3-column named grid */
+/* Named-area grid: stacked, 2 columns from 640px, 3 columns from 1024px */
 .bio-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -46,6 +38,107 @@
     grid-template-areas:
       "map      map      sql"
       "profile  cat      book"
-      "cv       cv      cv";
+      "cv       cv       cv";
   }
+}
+
+/* Reveal wrapper (motion) around the glass card so hover transforms from
+   .card are not overridden by motion's inline transform. */
+.bio-cell {
+  display: grid;
+  min-width: 0;
+}
+
+/* Surface, border, hover and spotlight come from .card (globals.css).
+   Clipping happens on the body so the card's border spotlight survives. */
+.card.bio-card {
+  display: flex;
+  padding: var(--space-lg);
+  min-height: var(--card-min-h);
+  height: 100%;
+}
+
+.bio-card-body {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* --- Profile card (cartoon) --- */
+.bio-profile {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  transition: transform 0.15s ease-out;
+}
+
+.bio-profile-figure {
+  /* Illustration palette, keyed to the navy scale (moved from hero.css) */
+  --cj-suit: hsl(222 42% 17%);
+  --cj-suit-dark: hsl(222 46% 13%);
+  --cj-suit-leg: hsl(222 40% 15%);
+  --cj-suit-shadow: hsl(222 45% 11%);
+  --cj-outline: var(--color-navy-950);
+
+  height: 150px;
+  padding: 0 var(--space-md);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, hsl(210 50% 60% / 0.14), transparent 75%);
+  pointer-events: none;
+}
+
+.bio-profile-figure svg {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+.bio-profile-caption {
+  text-align: center;
+}
+
+.bio-profile-name {
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-white);
+}
+
+.bio-profile-id {
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+/* --- CV export card --- */
+.bio-cv {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.bio-cv-icon {
+  color: var(--color-muted);
+}
+
+.bio-cv-kicker {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 4px;
+}
+
+.bio-cv-status {
+  font-size: var(--text-sm);
+  color: var(--color-off-white);
+  min-height: 1.6em;
 }

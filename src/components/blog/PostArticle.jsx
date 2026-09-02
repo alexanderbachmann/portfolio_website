@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { formatDate } from '@/lib/posts';
 import { renderPostHtml } from '@/lib/render-post-html';
 import CodeCopyButtons from './CodeCopyButtons';
+import ReadingProgress from './ReadingProgress';
 import OwnerOnly from '@/components/admin/OwnerOnly';
 
 /* Shared renderer for the public post page and the owner's draft preview. */
@@ -11,6 +12,7 @@ export default async function PostArticle({ post, preview = false }) {
 
   return (
     <main className="section blog-post">
+      {!preview && <ReadingProgress />}
       {preview && (
         <div className="blog-preview-banner" role="status">
           Draft preview, not public.{' '}

@@ -1,6 +1,7 @@
-import Link from 'next/link';
-import { getAllPosts, formatDate } from '@/lib/posts';
+import PostCard from '@/components/blog/PostCard';
 import BlogOwnerBar from '@/components/blog/BlogOwnerBar';
+import { getAllPosts } from '@/lib/posts';
+import { sections } from '@/data/site';
 
 export const metadata = {
   title: 'Blog',
@@ -14,14 +15,14 @@ export const revalidate = 3600;
 
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();
+  const copy = sections.writing;
 
   return (
     <main className="section blog-index">
       <header className="blog-index-header">
-        <h1>Writing</h1>
-        <p className="blog-index-intro">
-          Notes on data products, ownership, and building things that scale.
-        </p>
+        <p className="blog-index-eyebrow">{copy.eyebrow}</p>
+        <h1 className="blog-index-title">{copy.pageTitle}</h1>
+        <p className="blog-index-intro">{copy.description}</p>
         <BlogOwnerBar />
       </header>
 
@@ -31,26 +32,7 @@ export default async function BlogIndexPage() {
         <ul className="blog-list">
           {posts.map((post) => (
             <li key={post.slug}>
-              <Link href={`/blog/${post.slug}`} className="post-card">
-                <div className="post-card-meta">
-                  <time dateTime={post.publishedAt}>
-                    {formatDate(post.publishedAt)}
-                  </time>
-                  <span aria-hidden>·</span>
-                  <span>{post.readingTime}</span>
-                </div>
-                <h2 className="post-card-title">{post.title}</h2>
-                <p className="post-card-description">{post.description}</p>
-                {post.tags.length > 0 && (
-                  <div className="post-card-tags">
-                    {post.tags.map((tag) => (
-                      <span key={tag} className="post-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </Link>
+              <PostCard post={post} />
             </li>
           ))}
         </ul>

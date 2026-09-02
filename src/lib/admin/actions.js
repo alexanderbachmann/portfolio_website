@@ -91,6 +91,7 @@ async function denyUnlessOwner() {
 }
 
 function revalidateBlog(slugs = []) {
+  revalidatePath('/'); /* the home page lists the latest posts */
   revalidatePath('/blog');
   revalidatePath('/rss.xml');
   revalidatePath('/sitemap.xml');

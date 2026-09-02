@@ -4,13 +4,29 @@ import TechStack from '@/components/tech-stack';
 import Experience from '@/components/experience';
 import Projects from '@/components/projects';
 import Accomplishments from '@/components/accomplishments';
+import LatestWriting from '@/components/latest-writing';
 import Contact from '@/components/contact';
+import { getAllPosts } from '@/lib/posts';
 
-export default function HomePage() {
+/* ISR: the writing section reads from the database. Refreshed hourly and
+   by every admin write (revalidatePath('/') in src/lib/admin/actions.js). */
+export const revalidate = 3600;
+
+export default async function HomePage() {
+  let posts = [];
+  try {
+    posts = (await getAllPosts()).slice(0, 3);
+  } catch (err) {
+    console.warn('HomePage: latest writing unavailable,', err.message);
+  }
+
   return (
     <main>
       <section id="about">
-        <Hero />
+        {/* The line grid lives behind the hero only. */}
+        <div className="bg-grid">
+          <Hero />
+        </div>
         <BioGrid />
       </section>
 
@@ -26,7 +42,11 @@ export default function HomePage() {
         <Projects />
       </section>
 
-      <Accomplishments />
+      <section id="accomplishments">
+        <Accomplishments />
+      </section>
+
+      <LatestWriting posts={posts} />
 
       <section id="contact">
         <Contact />

@@ -1,0 +1,51 @@
+.latest-writing {
+  padding: var(--section-pad) var(--space-xl);
+}
+
+.latest-writing-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.latest-writing-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.latest-writing-header > :first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.latest-writing-all {
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+/* auto-fill keeps empty tracks, so one post renders as one third-width card */
+.latest-writing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr));
+  gap: var(--space-lg);
+}
+
+.latest-writing-grid > li {
+  display: grid;
+  min-width: 0;
+}
+
+.latest-writing .post-card {
+  height: 100%;
+}
+
+.latest-writing .post-card-title {
+  font-size: var(--text-lg);
+}
+
+@media (max-width: 640px) {
+  .latest-writing-header {
+    flex-direction: column;
+  }
+}

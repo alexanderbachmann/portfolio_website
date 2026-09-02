@@ -1,0 +1,11 @@
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 90; /* below the nav (100) */
+  background: var(--color-accent);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}

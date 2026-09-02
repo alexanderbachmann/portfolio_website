@@ -1,216 +1,248 @@
 /* ========================================
-   NAVBAR
+   NAVBAR: floating glass pill
+   Geometry tokens (--nav-top, --nav-h, --nav-height) live in globals.css.
+   Centred with left/right + margin-inline, never transform, so fixed
+   siblings and layoutId measurements stay viewport-relative.
    ======================================== */
 .nav {
   position: fixed;
-  top: 0;
+  top: var(--nav-top);
   left: 0;
   right: 0;
   z-index: 100;
-  height: var(--nav-height);
-  background: hsl(222 47% 6% / 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-line);
-  will-change: transform;
-}
-
-.nav-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  height: 100%;
+  width: min(100% - 2rem, 1100px);
+  height: var(--nav-h);
+  margin-inline: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--space-xl);
+  gap: var(--space-sm);
+  padding: 0 var(--space-sm) 0 var(--space-lg);
+  border: 1px solid hsl(220 30% 70% / 0.12);
+  border-radius: var(--radius-full);
+  background: hsl(222 45% 8% / 0.7);
+  -webkit-backdrop-filter: blur(var(--blur-nav)) saturate(140%);
+  backdrop-filter: blur(var(--blur-nav)) saturate(140%);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05), var(--shadow-nav);
+  transition:
+    background-color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    box-shadow var(--duration) var(--ease-out);
+}
+
+.nav--scrolled {
+  background: hsl(222 45% 8% / 0.88);
+  border-color: hsl(220 30% 70% / 0.18);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06), 0 16px 48px -16px hsl(222 60% 3% / 0.9);
 }
 
 /* --- Logo --- */
 .nav-logo {
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: 1.125rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   color: var(--color-white);
 }
 
 .nav-logo:hover {
+  color: var(--color-white);
   opacity: 0.85;
 }
 
-/* --- Desktop Links --- */
+/* --- Desktop links --- */
 .nav-links {
   display: none;
   align-items: center;
-  gap: var(--space-2xl);
+  gap: 2px;
+  margin-left: auto;
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-off-white);
+  transition: color var(--duration) var(--ease-out);
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--color-white);
+}
+
+/* Sliding neutral indicator (motion layoutId="nav-active") */
+.nav-active {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: var(--radius-full);
+  background: hsl(0 0% 100% / 0.08);
+}
+
+/* --- CTA --- */
+.nav-cta {
+  margin-left: auto;
+}
+
+/* --- Burger --- */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-off-white);
+}
+
+.nav-toggle:hover {
+  background: hsl(0 0% 100% / 0.08);
+  border-color: transparent;
+  color: var(--color-white);
 }
 
 @media (min-width: 768px) {
   .nav-links {
     display: flex;
   }
-}
 
-.nav-links a {
-  position: relative;
-  font-size: var(--text-base);
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  padding: var(--space-xs) 0;
-  transition: color var(--duration) var(--ease-out);
-}
+  .nav-cta {
+    margin-left: var(--space-xs);
+  }
 
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background: var(--color-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--duration) var(--ease-out);
-}
-
-.nav-links a:hover,
-.nav-links a.active {
-  color: var(--color-text-primary);
-}
-
-.nav-links a:hover::after,
-.nav-links a.active::after {
-  transform: scaleX(1);
-}
-
-/* --- CTA (the one orange element in the nav) --- */
-.nav-links a.nav-cta,
-.nav-mobile-menu a.nav-cta {
-  background: var(--color-accent);
-  color: hsl(0 0% 100%);
-  padding: 0.45em 1.1em;
-  border-radius: var(--radius-full);
-  font-weight: 600;
-  transition: background-color var(--duration) var(--ease-out);
-}
-
-.nav-links a.nav-cta:hover,
-.nav-mobile-menu a.nav-cta:hover {
-  background: var(--color-accent-hover);
-  color: hsl(0 0% 100%);
-}
-
-.nav-links a.nav-cta::after {
-  display: none;
-}
-
-/* --- Mobile Toggle --- */
-.nav-mobile-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  color: var(--color-text-primary);
-  padding: var(--space-sm);
-  cursor: pointer;
-}
-
-@media (min-width: 768px) {
-  .nav-mobile-toggle {
+  .nav-toggle {
     display: none;
   }
-}
-
-.nav-mobile-toggle:hover {
-  color: var(--color-accent);
-  background: transparent;
-  border-color: transparent;
-}
-
-/* --- Mobile Menu --- */
-.nav-mobile-menu {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 260px;
-  height: 100vh;
-  background: var(--color-bg-base);
-  border-left: 1px solid var(--color-border);
-  transform: translateX(100%);
-  transition: transform var(--duration) var(--ease-out);
-  z-index: 1001;
-  padding: var(--space-3xl) var(--space-xl);
-}
-
-.nav-mobile-menu.open {
-  transform: translateX(0);
-}
-
-.nav-mobile-close {
-  position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
-  background: transparent;
-  border: none;
-  color: var(--color-text-secondary);
-  padding: var(--space-sm);
-  cursor: pointer;
-  transition: color var(--duration) var(--ease-out);
-}
-
-.nav-mobile-close:hover {
-  color: var(--color-accent);
-  background: transparent;
-  border-color: transparent;
-}
-
-.nav-mobile-menu ul {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-  margin-top: var(--space-xl);
-}
-
-.nav-mobile-menu li {
-  opacity: 0;
-  transform: translateX(20px);
-  transition: opacity var(--duration) var(--ease-out),
-              transform var(--duration) var(--ease-out);
-}
-
-.nav-mobile-menu.open li {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.nav-mobile-menu a {
-  display: block;
-  font-size: var(--text-lg);
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  padding: var(--space-sm) var(--space-md);
-  border-radius: var(--radius-sm);
-  transition: color var(--duration) var(--ease-out),
-              background-color var(--duration) var(--ease-out);
-}
-
-.nav-mobile-menu a:hover,
-.nav-mobile-menu a.active {
-  color: var(--color-text-primary);
-  background: hsla(220, 20%, 40%, 0.12);
 }
 
 /* --- Overlay --- */
 .nav-overlay {
   position: fixed;
   inset: 0;
-  background: hsla(0, 0%, 0%, 0.5);
-  z-index: 1000;
-  animation: fadeIn var(--duration) var(--ease-out);
+  z-index: 900;
+  background: hsl(222 47% 4% / 0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration) var(--ease-out);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.nav-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Drawer: glass sheet from the right --- */
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  width: min(20rem, 85vw);
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding: calc(var(--nav-top) + var(--space-xs)) var(--space-xl) max(var(--space-xl), env(safe-area-inset-bottom));
+  background: hsl(222 45% 8% / 0.85);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border-left: 1px solid hsl(220 30% 70% / 0.12);
+  box-shadow: -24px 0 60px -24px hsl(222 60% 3% / 0.8);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--duration-slow) var(--ease-spring),
+    visibility 0s linear var(--duration-slow);
+}
+
+.nav-drawer.is-open {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform var(--duration-slow) var(--ease-spring),
+    visibility 0s;
+}
+
+.nav-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-h);
+}
+
+.nav-drawer-brand {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.nav-drawer-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.nav-drawer-list li {
+  opacity: 0;
+  translate: 16px 0;
+  transition:
+    opacity 0.35s var(--ease-out),
+    translate var(--duration-slow) var(--ease-spring);
+}
+
+.nav-drawer.is-open li {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.nav-drawer-link {
+  display: block;
+  padding: var(--space-sm) var(--space-md);
+  margin-inline: calc(-1 * var(--space-md));
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-off-white);
+  transition:
+    color var(--duration) var(--ease-out),
+    background-color var(--duration) var(--ease-out);
+}
+
+.nav-drawer-link:hover,
+.nav-drawer-link.is-active {
+  color: var(--color-white);
+  background: hsl(0 0% 100% / 0.06);
+}
+
+.nav-drawer-cta {
+  margin-top: auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .nav-overlay,
+  .nav-drawer {
+    display: none;
+  }
 }

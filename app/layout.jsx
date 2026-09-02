@@ -1,8 +1,12 @@
 import { Inter, Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+/* globals.css must load before any component stylesheet: the shared
+   .card / .btn primitives live there and component CSS overrides them. */
+import './globals.css';
 import NavBar from '@/components/navbar';
 import Footer from '@/components/footer';
+import MotionProvider from '@/components/shared/MotionProvider';
+import Spotlight from '@/components/shared/Spotlight';
 import { site } from '@/data/site';
-import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -50,18 +54,25 @@ export const metadata = {
 
 export const viewport = {
   themeColor: '#080d17',
+  colorScheme: 'dark',
 };
 
 export default function RootLayout({ children }) {
   return (
+    /* data-scroll-behavior keeps smooth scrolling during client
+       navigation in Next 16, which otherwise resets it. */
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <NavBar />
-        {children}
-        <Footer />
+        <MotionProvider>
+          <NavBar />
+          {children}
+          <Footer />
+        </MotionProvider>
+        <Spotlight />
       </body>
     </html>
   );

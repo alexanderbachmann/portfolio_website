@@ -1,19 +1,23 @@
 @import "tailwindcss";
 
 /* ============================================================
-   DESIGN TOKENS — Refined Navy + Orange
+   DESIGN TOKENS: deep navy + orange, editorial glass
    ------------------------------------------------------------
-   ORANGE DISCIPLINE RULES (orange ≤ ~5% of visual weight):
+   ORANGE DISCIPLINE RULES (orange is at most ~5% of visual weight):
    1. Orange is allowed ONLY on: the one primary CTA per
       viewport, the active nav indicator, link hover states,
       one highlighted word/metric per section, focus rings.
    2. Never orange: card backgrounds, borders at rest, icons
       at rest, body text, section headings.
    3. Secondary buttons/links are white outline or off-white
-      text — never a second orange.
+      text, never a second orange.
    4. Large surfaces wanting warmth use accent-soft (12% alpha).
+   ------------------------------------------------------------
+   "static": Tailwind v4 prunes @theme variables that this file
+   does not reference itself, and most tokens are only read by
+   the co-located component stylesheets.
    ============================================================ */
-@theme {
+@theme static {
   /* --- Navy scale (hue 222) --- */
   --color-navy-950: hsl(222 47% 6%);   /* page background   */
   --color-navy-900: hsl(222 45% 9%);   /* alt background    */
@@ -32,8 +36,13 @@
   --color-accent-hover: hsl(20 92% 46%);
   --color-accent-soft: hsl(20 88% 52% / 0.12);
 
-  /* --- Border --- */
+  /* --- Lines and glass --- */
   --color-line: hsl(220 20% 40% / 0.25);
+  --color-line-strong: hsl(220 30% 70% / 0.22);
+  --color-glass: hsl(222 40% 12% / 0.62);
+  --color-glass-border: hsl(220 30% 70% / 0.10);
+  --color-glass-border-hover: hsl(220 30% 70% / 0.22);
+  --color-steel: hsl(210 60% 70%);     /* spotlight ring, never orange */
 
   /* --- Fonts (loaded via next/font in app/layout.jsx) --- */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -58,7 +67,7 @@
 
   --color-accent-glow: var(--color-accent-soft);
 
-  /* Indigo removed: gradients now run white → orange */
+  /* Gradients run white to orange */
   --color-gradient-start: var(--color-white);
   --color-gradient-end: var(--color-accent);
 
@@ -76,10 +85,12 @@
   --text-2xl: 2rem;
   --text-3xl: 2.5rem;
   --text-4xl: 3.5rem;
-  --text-hero: clamp(3rem, 8vw, 5.5rem);
+  --text-hero: clamp(3rem, 9vw, 6rem);
+  --text-display: clamp(2rem, 4vw, 3rem);
 
   --leading-tight: 1.15;
   --leading-normal: 1.6;
+  --tracking-tight: -0.03em;
 
   /* --- Spacing --- */
   --space-xs: 0.25rem;
@@ -93,13 +104,17 @@
 
   /* --- Layout --- */
   --max-width: 1200px;
-  --nav-height: 4rem;
+  --nav-top: 0.75rem;    /* gap above the floating pill */
+  --nav-h: 3.25rem;      /* pill height */
+  --nav-height: 4rem;    /* nav-top + nav-h: the offset every page reads */
+  --section-pad: clamp(4rem, 8vw, 6rem);
 
   /* --- Radii --- */
   --radius-sm: 0.375rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
   --radius-xl: 1.5rem;
+  --radius-2xl: 1.25rem;
   --radius-full: 9999px;
 
   /* --- Shadows --- */
@@ -107,8 +122,17 @@
   --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.25);
   --shadow-lg: 0 8px 30px hsl(0 0% 0% / 0.35);
   --shadow-glow: 0 0 20px var(--color-accent-soft);
+  --shadow-card: 0 1px 2px hsl(222 60% 3% / 0.4), 0 12px 32px -16px hsl(222 60% 3% / 0.7);
+  --shadow-card-hover: 0 2px 4px hsl(222 60% 3% / 0.4), 0 28px 56px -20px hsl(222 60% 3% / 0.85);
+  --shadow-nav: 0 10px 40px -16px hsl(222 60% 3% / 0.8);
+  --shadow-accent: 0 10px 28px -10px hsl(20 88% 52% / 0.55);
 
-  /* --- Chart colors (indigo replaced with steel blue) --- */
+  /* --- Effects --- */
+  --blur: 12px;
+  --blur-nav: 16px;
+  --grain-opacity: 0.035;
+
+  /* --- Chart colors --- */
   --color-chart-1: var(--color-accent);
   --color-chart-2: hsl(210 50% 60%);
   --color-chart-3: hsl(160 60% 45%);
@@ -118,9 +142,11 @@
   --grid-gap: var(--space-lg);
   --card-min-h: 200px;
 
-  /* --- Transitions --- */
+  /* --- Motion --- */
   --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 0.3s;
+  --duration-slow: 0.5s;
 }
 
 /* ============================================================
@@ -135,8 +161,13 @@
 }
 
 html {
+  color-scheme: dark;
+  /* The page colour lives here, not on body: body must stay
+     transparent so the fixed bloom layer below shows through. */
+  background: var(--color-navy-950);
   scroll-behavior: smooth;
-  scroll-padding-top: var(--nav-height);
+  scroll-padding-top: calc(var(--nav-height) + var(--space-md));
+  scrollbar-color: var(--color-navy-600) var(--color-navy-950);
 }
 
 body {
@@ -144,18 +175,47 @@ body {
   font-weight: 400;
   line-height: var(--leading-normal);
   color: var(--color-white);
-  /* Calm layered ground: faint navy bloom top-right, whisper of
-     warmth left, over deep navy. Replaces animated particles. */
-  background:
-    radial-gradient(1100px 700px at 85% -10%, hsl(222 45% 13% / 0.9), transparent 60%),
-    radial-gradient(900px 650px at -15% 35%, hsl(20 88% 52% / 0.04), transparent 55%),
-    var(--color-navy-950);
-  background-attachment: fixed;
   min-height: 100vh;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Aurora blooms: a fixed layer (iOS Safari ignores
+   background-attachment: fixed) that paints above the html canvas
+   and below every in-flow element. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(70vmax 50vmax at 8% -12%, hsl(222 70% 35% / 0.28) 0%, transparent 62%),
+    radial-gradient(55vmax 42vmax at 102% 108%, hsl(20 88% 52% / 0.06) 0%, transparent 60%);
+}
+
+/* Film grain: one 200px feTurbulence tile, fixed over everything. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* The admin editor gets no grain (Mantine popovers stay crisp). */
+body:has(.admin-root)::after {
+  display: none;
+}
+
+::selection {
+  background: hsl(20 88% 52% / 0.32);
+  color: hsl(0 0% 100%);
 }
 
 img {
@@ -167,6 +227,28 @@ img {
 ul,
 ol {
   list-style: none;
+}
+
+/* Hero-only line grid: app/page.jsx wraps the hero in .bg-grid.
+   isolation keeps the z-index -1 pseudo inside this box. */
+.bg-grid {
+  position: relative;
+  isolation: isolate;
+}
+
+.bg-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(hsl(0 0% 100% / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(0 0% 100% / 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 35%, #000 10%, transparent 85%);
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 35%, #000 10%, transparent 85%);
 }
 
 /* ============================================================
@@ -183,8 +265,7 @@ a:hover {
   color: var(--color-accent);
 }
 
-/* Buttons default to a quiet ghost style; primary CTAs opt in
-   to orange with .btn-primary (orange discipline rule #1). */
+/* Buttons default to a quiet ghost style; real CTAs use .btn below. */
 button {
   border-radius: var(--radius-md);
   padding: 0.6em 1.2em;
@@ -212,15 +293,9 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-.btn-primary {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: hsl(0 0% 100%);
-}
-
-.btn-primary:hover {
-  background: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
+/* An orange ring on an orange fill needs the gap to stay visible. */
+.btn--primary:focus-visible {
+  outline-offset: 3px;
 }
 
 /* ============================================================
@@ -231,66 +306,219 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
 }
 
-h1 { font-size: var(--text-4xl); line-height: var(--leading-tight); font-weight: 700; }
-h2 { font-size: var(--text-3xl); line-height: var(--leading-tight); font-weight: 700; }
-h3 { font-size: var(--text-xl);  line-height: var(--leading-tight); font-weight: 600; }
-h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight: 500; }
+h1 { font-size: var(--text-4xl);     line-height: var(--leading-tight); font-weight: 700; }
+h2 { font-size: var(--text-display); line-height: 1.1;                  font-weight: 700; }
+h3 { font-size: var(--text-xl);      line-height: var(--leading-tight); font-weight: 600; }
+h4 { font-size: var(--text-lg);      line-height: var(--leading-tight); font-weight: 500; letter-spacing: -0.02em; }
 
-/* ============================================================
-   UTILITY: gradient text (white → orange)
-   ============================================================ */
+/* The one highlighted word per section (white to orange). */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+  background: linear-gradient(120deg, var(--color-white) 0%, hsl(20 88% 62%) 55%, var(--color-accent) 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* ============================================================
-   SECTION & SURFACES
+   SECTION
    ============================================================ */
 .section {
-  padding: var(--space-4xl) var(--space-xl);
+  padding: var(--section-pad) var(--space-xl);
   max-width: var(--max-width);
   margin: 0 auto;
 }
 
-.surface {
-  background: var(--color-navy-800);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-}
-
-.bio-card {
-  background: var(--color-navy-800);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  min-height: var(--card-min-h);
-  overflow: hidden;
-  will-change: transform;
+/* ============================================================
+   CARD: the single glass surface. Compose it: class="card project-card".
+   The pseudo-elements sit at z-index -1 inside the card's own
+   stacking context (isolation: isolate), so they paint above the
+   card background and below every child, positioned or not; clicks
+   are never intercepted. The card never sets overflow: components
+   that need clipping do it on an inner element, so the 1px border
+   spotlight is not clipped away.
+   --mx / --my are set by src/components/shared/Spotlight.jsx.
+   ============================================================ */
+.card {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(180deg, hsl(222 40% 13% / 0.75), hsl(222 42% 9% / 0.75));
+  background-clip: padding-box;
+  -webkit-backdrop-filter: blur(var(--blur));
+  backdrop-filter: blur(var(--blur));
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.05), var(--shadow-card);
   transition:
     border-color var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out),
-    box-shadow var(--duration) var(--ease-out);
+    box-shadow var(--duration-slow) var(--ease-spring),
+    translate var(--duration-slow) var(--ease-spring);
 }
 
-.bio-card:hover {
-  border-color: var(--color-navy-600);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
 }
 
-.dot-pattern-bg {
-  background-image: radial-gradient(
-    hsl(220 20% 40% / 0.12) 1px,
-    transparent 1px
-  );
-  background-size: 24px 24px;
+/* Surface sheen */
+.card::before {
+  inset: 0;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), hsl(0 0% 100% / 0.07), transparent 60%);
+}
+
+/* Border spotlight: a 1px ring via padding + mask-composite. inset: -1px
+   aligns the ring with the real border. Steel blue, not orange. */
+.card::after {
+  inset: -1px;
+  padding: 1px;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), hsl(210 60% 70% / 0.35), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* Lifts use `translate`: motion leaves an inline `transform: none`
+   on revealed elements, which would cancel a transform-based hover. */
+@media (hover: hover) and (pointer: fine) {
+  .card:not(.card--static):hover {
+    border-color: var(--color-glass-border-hover);
+    box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.07), var(--shadow-card-hover);
+    translate: 0 -3px;
+  }
+
+  .card:not(.card--static):hover::before,
+  .card:not(.card--static):hover::after {
+    opacity: 1;
+  }
+}
+
+.card--static::before,
+.card--static::after {
+  display: none;
+}
+
+.card--pad {
+  padding: var(--space-lg);
+}
+
+.card--pad-lg {
+  padding: var(--space-xl);
+}
+
+/* Twenty blurred surfaces is too much for phone GPUs; the gradient
+   carries the look there. The nav keeps its blur. */
+@media (max-width: 640px) {
+  .card {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .card,
+  .nav,
+  .nav-drawer {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: var(--color-navy-800);
+  }
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0.7em 1.5em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-off-white);
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    color var(--duration) var(--ease-out),
+    box-shadow var(--duration) var(--ease-out),
+    translate var(--duration-slow) var(--ease-spring);
+}
+
+.btn svg {
+  flex-shrink: 0;
+  transition: transform var(--duration) var(--ease-out);
+}
+
+/* Nudge only a trailing icon (arrows), never a leading brand icon. */
+.btn:hover > svg:last-child:not(:first-child) {
+  transform: translateX(3px);
+}
+
+.btn:active {
+  translate: 0 0;
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: hsl(0 0% 100%);
+}
+
+.btn--primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: hsl(0 0% 100%);
+  box-shadow: var(--shadow-accent);
+  translate: 0 -2px;
+}
+
+.btn--ghost {
+  border-color: hsl(220 30% 70% / 0.18);
+  color: var(--color-off-white);
+}
+
+.btn--ghost:hover {
+  border-color: hsl(220 30% 70% / 0.40);
+  background: hsl(0 0% 100% / 0.04);
+  color: var(--color-white);
+  translate: 0 -2px;
+}
+
+.btn--sm {
+  padding: 0.5em 1.1em;
+  font-size: var(--text-sm);
+}
+
+.btn--icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  color: var(--color-muted);
+}
+
+.btn--icon:hover {
+  color: var(--color-white);
+  border-color: hsl(220 30% 70% / 0.25);
+  background: hsl(0 0% 100% / 0.04);
+  translate: 0 -2px;
 }
 
 /* ============================================================
@@ -303,15 +531,30 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
 }
 
 .blog-index-header {
-  margin-bottom: var(--space-3xl);
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-line);
 }
 
-.blog-index-header h1 {
+.blog-index-eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.blog-index-title {
+  font-size: var(--text-display);
+  letter-spacing: -0.03em;
   margin-bottom: var(--space-sm);
 }
 
 .blog-index-intro {
   color: var(--color-off-white);
+  font-size: var(--text-lg);
+  max-width: 56ch;
 }
 
 /* Owner-only shortcuts, rendered client side from the hint cookie. */
@@ -347,42 +590,44 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
   gap: var(--space-lg);
 }
 
-.post-card {
-  display: block;
-  padding: var(--space-lg);
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
-  background: var(--color-navy-800);
-  transition:
-    border-color var(--duration) var(--ease-out),
-    transform var(--duration) var(--ease-out);
+/* Post card: the whole card is the link; the arrow carries the hover orange. */
+.card.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-lg) var(--space-xl);
+  color: inherit;
+  font-weight: 400;
 }
 
 .post-card:hover {
-  border-color: var(--color-navy-600);
-  transform: translateY(-2px);
   color: inherit;
 }
 
 .post-card-meta {
   display: flex;
-  gap: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
+}
+
+/* Date and reading time wrap as units, never mid-phrase */
+.post-card-meta > * {
+  white-space: nowrap;
 }
 
 .post-card-title {
+  font-family: var(--font-display);
   font-size: var(--text-xl);
-  margin-bottom: var(--space-xs);
-  transition: color var(--duration) var(--ease-out);
-}
-
-.post-card:hover .post-card-title {
-  color: var(--color-accent);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
 }
 
 .post-card-description {
@@ -390,20 +635,52 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
   font-size: var(--text-base);
 }
 
+.post-card-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
 .post-card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
-  margin-top: var(--space-md);
+  gap: var(--space-xs) var(--space-sm);
 }
 
 .post-tag {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--color-muted);
-  background: var(--color-navy-700);
+  background: hsl(0 0% 100% / 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.06);
   padding: 2px 10px;
   border-radius: var(--radius-full);
+}
+
+.post-card-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-glass-border);
+  background: hsl(0 0% 100% / 0.04);
+  color: var(--color-muted);
+  transition:
+    color var(--duration) var(--ease-out),
+    border-color var(--duration) var(--ease-out),
+    transform var(--duration) var(--ease-out);
+}
+
+.post-card:hover .post-card-arrow {
+  color: var(--color-accent);
+  border-color: var(--color-line-strong);
+  transform: translate(2px, -2px);
 }
 
 /* --- Post page --- */
@@ -669,5 +946,10 @@ h4 { font-size: var(--text-lg);  line-height: var(--leading-tight); font-weight:
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .card:hover,
+  .btn:hover {
+    translate: none;
   }
 }

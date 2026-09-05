@@ -18,10 +18,10 @@ Posts live in Neon Postgres (connected through the Vercel Marketplace) and image
 
 ```bash
 npm run db:migrate        # create or update the schema (idempotent)
-npm run db:seed-legacy    # import the original MDX post (no-op if it exists)
+npm run db:seed-legacy    # manual, one-off: re-import the original MDX post
 ```
 
-`npm run build` runs both scripts before `next build`, so each Vercel deployment keeps the database schema current on its own.
+`npm run build` runs the migration before `next build`, so each Vercel deployment keeps the database schema current on its own. It does not seed any post: builds never create, restore, or publish content. Posts are yours to add and delete from `/admin`.
 
 ## Writing posts
 

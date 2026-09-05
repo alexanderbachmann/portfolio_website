@@ -36,7 +36,8 @@ Personal portfolio and blog for Janio Martinez Bachmann. Deployed on Vercel (Hob
 - Cookies are host-only by design, so a session created on a deployment-specific `*.vercel.app` build URL does not exist on the canonical site. Always sign in on `site.url`.
 - `proxy.js` slides the session forward when it is more than a day old, and answers unauthenticated non-GET requests with 401 rather than a redirect, so an expired session surfaces as a save error instead of an unresolvable Server Action. It duplicates the cookie names, TTL, and the 32-character `AUTH_SECRET` check from `src/lib/auth.js`; keep the two in sync.
 - Env vars: `DATABASE_URL` and `BLOB_READ_WRITE_TOKEN` are injected by Vercel (possibly under a custom prefix such as `neonjaniodb_DATABASE_URL`; `src/lib/env.js` resolves both); `AUTH_SECRET` and `ADMIN_PASSWORD` are set manually in Vercel. Vercel marks these Sensitive, so `vercel env pull` cannot fetch their values: for local work, paste them into `.env.local` by hand (names in `.env.example`).
-- `npm run build` runs the migration and the legacy-post seed before `next build`, so every Vercel deployment sets up the database itself. Both scripts are idempotent.
+- `npm run build` runs the migration before `next build`, so every Vercel deployment keeps the schema current on its own. The migration is idempotent and never writes post content.
+- **No script may create or restore posts during a build.** `npm run db:seed-legacy` was a one-off MDX import; Janio has since deleted that post on purpose, and re-seeding it would republish content he removed. Never add a seed step back to `build`, and only run the seed by hand if he asks for that post back.
 
 ## Git workflow (standing instruction from Janio)
 

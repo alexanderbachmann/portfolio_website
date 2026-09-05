@@ -47,10 +47,10 @@ export const metrics = [
     description: 'Dominican Republic, Germany, Canada, Ireland, Spain',
   },
   {
-    value: 6,
+    /* Domains, not employers: the timeline below already lists every company. */
+    value: 5,
     suffix: '',
-    label: 'Companies',
-    /* Domains, not names: the timeline below already lists every employer. */
+    label: 'Domains',
     description: 'Healthcare, gaming, tech, finance, e-commerce',
   },
 ];

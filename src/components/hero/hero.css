@@ -251,111 +251,6 @@
 }
 
 /* ========================================
-   EMPLOYER STRIP
-   ======================================== */
-.logo-strip {
-  width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  text-align: center;
-}
-
-.logo-strip-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--color-muted);
-  margin-bottom: var(--space-md);
-}
-
-.logo-marquee {
-  --logo-gap: 0.75rem;
-  overflow: hidden;
-}
-
-.logo-marquee-track {
-  display: flex;
-}
-
-/* Static, centred, wrapping row (>= 900px). The duplicate list is hidden. */
-.logo-strip-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--logo-gap);
-}
-
-.logo-strip-list[aria-hidden='true'] {
-  display: none;
-}
-
-.logo-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 0.9rem 0.45rem 0.45rem;
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-glass-border);
-  background: hsl(0 0% 100% / 0.04);
-  white-space: nowrap;
-}
-
-.logo-chip-mark {
-  display: flex;
-  width: 28px;
-  height: 28px;
-  padding: 3px;
-  border-radius: 50%;
-  background: hsl(0 0% 100%);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.logo-chip-mark img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.logo-chip-name {
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-off-white);
-}
-
-/* Infinite marquee below 900px. Each list carries the gap as padding so
-   translateX(-50%) lands exactly on the seam. */
-@media (max-width: 899.98px) {
-  .logo-marquee {
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  }
-
-  .logo-marquee-track {
-    width: max-content;
-    animation: logo-marquee 28s linear infinite;
-  }
-
-  .logo-marquee:hover .logo-marquee-track {
-    animation-play-state: paused;
-  }
-
-  .logo-strip-list,
-  .logo-strip-list[aria-hidden='true'] {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-right: var(--logo-gap);
-  }
-}
-
-@keyframes logo-marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* ========================================
    RESPONSIVE
    ======================================== */
 @media (max-width: 899.98px) {
@@ -415,29 +310,10 @@
 }
 
 /* ========================================
-   REDUCED MOTION (the global rule would freeze the marquee at -50%)
+   REDUCED MOTION
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
   .hero-status--availability .hero-status-dot {
     animation: none;
-  }
-
-  .logo-marquee {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .logo-marquee-track {
-    width: auto;
-    animation: none;
-  }
-
-  .logo-strip-list {
-    flex-wrap: wrap;
-    padding-right: 0;
-  }
-
-  .logo-strip-list[aria-hidden='true'] {
-    display: none;
   }
 }

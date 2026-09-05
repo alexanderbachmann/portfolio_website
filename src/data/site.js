@@ -65,7 +65,6 @@ export const hero = {
   availabilityText: 'Open to new opportunities',
   primaryCta: 'Get in touch',
   cvCta: 'Download CV',
-  logoStripLabel: 'Where I’ve worked',
 };
 
 /* Section headers. `highlight` is the one gradient word per section and

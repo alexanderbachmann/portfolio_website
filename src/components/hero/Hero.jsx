@@ -7,7 +7,6 @@ import { ArrowUpRight, FileDown, MapPin } from 'lucide-react';
 import AnimatedNumber from '@/components/shared/AnimatedNumber';
 import { socialIconByLabel } from '@/components/shared/socialIcons';
 import useTilt from '@/components/shared/useTilt';
-import LogoStrip from './LogoStrip';
 import { CV_PATH, hero, metrics, site, socials } from '@/data/site';
 import { experiences } from '@/data/experiences';
 import profilePic from '@/assets/speaker.jpeg';
@@ -156,8 +155,6 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
-
-      <LogoStrip />
     </div>
   );
 };

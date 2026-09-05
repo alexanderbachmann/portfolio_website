@@ -50,7 +50,8 @@ export const metrics = [
     value: 6,
     suffix: '',
     label: 'Companies',
-    description: 'Including Google, ECB, Roche',
+    /* Domains, not names: the timeline below already lists every employer. */
+    description: 'Healthcare, gaming, tech, finance, e-commerce',
   },
 ];
 
